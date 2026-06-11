@@ -1,0 +1,1391 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관악구청 당직 민원응대 시스템 — 개편안</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3efe6; --paper-2:#fbf9f4; --card:#ffffff;
+  --ink:#15201c; --ink-2:#3c473f; --ink-3:#6b756c;
+  --line:#ddd6c7; --line-2:#cfc7b5;
+  --brand:#0e7a5b; --brand-deep:#0a5740; --brand-soft:#dcefe6;
+  --p1:#6b7a72; --p1bg:#e7ebe6;
+  --p2:#2f9e6f; --p2bg:#daeee4;
+  --p3:#cf9114; --p3bg:#f6ecd3;
+  --p4:#dd6f1d; --p4bg:#f7e1cf;
+  --p5:#cd3434; --p5bg:#f6d9d9;
+  --fail:#a32c54; --failbg:#f6dde6;
+  --a-bg:#0a0e13; --a-surf:#121922; --a-surf2:#1a2330; --a-line:#27323f;
+  --a-tx:#e9eef3; --a-tx2:#8c98a5; --a-tx3:#5f6b78;
+  --a-p1:#8492a0; --a-p2:#37d893; --a-p3:#f3b73a; --a-p4:#ff8a3d; --a-p5:#ff5a52;
+  --a-fail:#ff7d9d;
+  --mono:'JetBrains Mono','Pretendard Variable',Pretendard,'Apple SD Gothic Neo','Malgun Gothic',ui-monospace,monospace;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); background:var(--paper); color:var(--ink);
+  line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  word-break:keep-all; overflow-wrap:break-word;
+  background-image:
+    radial-gradient(1200px 600px at 85% -5%, rgba(14,122,91,.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(205,52,52,.04), transparent 55%);
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.rv{opacity:0;transform:translateY(16px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(243,239,230,.82);backdrop-filter:blur(8px)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+.logo .mk{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--brand),var(--brand-deep));position:relative}
+.logo .mk::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;top:6px;right:6px}
+.tb-tag{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--line-2);padding:4px 9px;border-radius:20px;letter-spacing:.02em}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 56px;position:relative}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--brand-deep);background:var(--brand-soft);border:1px solid #bfe0d1;padding:6px 12px;border-radius:30px;margin-bottom:24px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--p5);animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{font-size:clamp(34px,6vw,62px);line-height:1.06;letter-spacing:-.035em;font-weight:800;max-width:16ch}
+.hero h1 b{color:var(--brand-deep)}
+.hero .lead{margin-top:22px;font-size:clamp(16px,2.1vw,20px);color:var(--ink-2);max-width:54ch;letter-spacing:-.01em}
+.tech-row{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-family:var(--mono);font-size:12px;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--line-2);padding:8px 13px;border-radius:8px;display:flex;align-items:center;gap:8px}
+.chip svg{width:14px;height:14px}
+
+/* ---------- section frame ---------- */
+.sec{padding:60px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;flex-wrap:wrap}
+.sec-no{font-family:var(--mono);font-size:13px;color:var(--brand);font-weight:700}
+.sec-head h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.03em;font-weight:800}
+.sec-head p{color:var(--ink-3);font-size:15px;width:100%;max-width:64ch;margin-top:-6px}
+
+/* ---------- problem ---------- */
+.prob-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+.callout{background:#1a120f;color:#f3e9e4;border-radius:18px;padding:34px;position:relative;overflow:hidden;border:1px solid #3a201a}
+.callout::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--p5)}
+.callout .src{font-family:var(--mono);font-size:11px;color:#e89b91;letter-spacing:.03em}
+.callout h3{font-size:21px;margin:14px 0 12px;letter-spacing:-.02em;line-height:1.3}
+.callout p{color:#cdbcb5;font-size:14.5px}
+.burden{display:grid;grid-template-rows:repeat(2,1fr);gap:14px}
+.bnum{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center}
+.bnum .v{font-family:var(--mono);font-size:38px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1}
+.bnum .v small{font-size:18px;color:var(--ink-3)}
+.bnum .l{color:var(--ink-2);font-size:14px;margin-top:8px}
+.bnum .l b{color:var(--brand-deep)}
+
+/* ---------- process (call flow + after flow) ---------- */
+.flow{background:var(--paper-2);border:1px solid var(--line);border-radius:20px;padding:30px;overflow:hidden;margin-bottom:18px}
+.flow-title{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.flow-title .fn{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--brand);padding:3px 9px;border-radius:6px}
+.flow-title h3{font-size:17px;letter-spacing:-.02em}
+.flow-title small{color:var(--ink-3);font-size:12.5px}
+.flow-track{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.fstep{flex:1;min-width:140px;text-align:center;padding:8px 6px;position:relative}
+.fstep .ico{width:50px;height:50px;border-radius:14px;margin:0 auto 11px;display:grid;place-items:center;background:var(--brand-soft);border:1px solid #bfe0d1;position:relative}
+.fstep.core .ico{background:var(--brand);border-color:var(--brand-deep)}
+.fstep.core .ico svg{stroke:#fff}
+.fstep .ico svg{width:23px;height:23px;stroke:var(--brand-deep);fill:none;stroke-width:1.7}
+.fstep .num{position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;display:grid;place-items:center}
+.fstep h4{font-size:14px;letter-spacing:-.01em}
+.fstep small{display:block;color:var(--ink-3);font-size:11.5px;margin-top:4px;line-height:1.45}
+.farrow{display:grid;place-items:center;color:var(--line-2);padding:0 2px;align-self:center}
+.farrow svg{width:22px;height:22px}
+.fork{margin-top:18px;border-top:1px dashed var(--line-2);padding-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fork-card{border-radius:13px;padding:15px 18px;border:1px solid var(--line);background:var(--card);display:flex;gap:13px;align-items:flex-start}
+.fork-card.ok{border-color:#bfe0d1;background:#f2faf6}
+.fork-card.re{border-color:#ecd9b8;background:#fbf6ea}
+.fork-card .fk{flex:none;font-family:var(--mono);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;margin-top:2px}
+.fork-card.ok .fk{background:var(--p2bg);color:var(--p2)}
+.fork-card.re .fk{background:var(--p3bg);color:var(--p3)}
+.fork-card .ft b{display:block;font-size:14px;letter-spacing:-.01em;margin-bottom:3px}
+.fork-card .ft span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.fork-card .ft .loopline{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-family:var(--mono);font-size:11px;color:var(--p3);font-weight:700}
+.fork-card .ft .loopline svg{width:13px;height:13px;stroke:var(--p3);fill:none;stroke-width:2}
+.fork-card.fail{border-color:#e3c2cf;background:var(--failbg)}
+.fork-card.fail .fk{background:#efcedb;color:var(--fail)}
+.fork-card.fail .ft .loopline{color:var(--fail)}
+.fork-card.fail .ft .loopline svg{stroke:var(--fail)}
+
+.scale{margin-top:8px;border-top:1px dashed var(--line-2);padding-top:26px}
+.scale-label{font-size:13px;color:var(--ink-3);font-family:var(--mono);margin-bottom:10px}
+.scale-bar{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--line);height:46px}
+.sb{flex:1;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em;position:relative}
+.sb small{position:absolute;bottom:3px;font-family:var(--mono);font-weight:500;font-size:9px;opacity:.85}
+.thr{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.thr-card{border:1px solid var(--line);border-radius:13px;padding:16px 18px;background:var(--card)}
+.thr-card .dn{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.thr-card .tr{font-family:var(--mono);font-size:11px;margin:9px 0 7px;display:inline-block;padding:3px 9px;border-radius:20px}
+.thr-card .ac{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:7px}
+.thr-card .ac svg{width:15px;height:15px;stroke-width:1.8;fill:none}
+
+/* ---------- scenario player ---------- */
+.scen-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.scen-tab{font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:-.01em;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;gap:9px;transition:.18s}
+.scen-tab .sd{width:9px;height:9px;border-radius:50%;background:var(--tc,var(--p3))}
+.scen-tab:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.scen-tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.scen-grid{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+.scen-call{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.scen-call .sc-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px;background:var(--paper-2)}
+.scen-call .sc-head .pbadge{font-size:12px;font-weight:800;color:#fff;padding:4px 11px;border-radius:20px}
+.scen-call .sc-head h3{font-size:16px;letter-spacing:-.02em;flex:1}
+.scen-call .sc-head .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
+.dl-row{display:flex;gap:11px;align-items:flex-start}
+.dl-row.right{flex-direction:row-reverse}
+.dl-step{flex:none;width:62px;text-align:center;padding-top:2px}
+.dl-step .sn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--brand-soft);border:1px solid #bfe0d1;color:var(--brand-deep);font-family:var(--mono);font-size:10.5px;font-weight:700}
+.dl-step small{display:block;font-size:9.5px;color:var(--ink-3);font-family:var(--mono);margin-top:3px;line-height:1.3}
+.dl-bub{max-width:560px;padding:12px 15px;border-radius:14px;font-size:13.8px;line-height:1.62}
+.dl-bub .who{display:block;font-family:var(--mono);font-size:10px;opacity:.55;margin-bottom:4px}
+.dl-row .dl-bub{background:var(--paper);border:1px solid var(--line);border-radius:4px 14px 14px 14px}
+.dl-row.right .dl-bub{background:linear-gradient(135deg,#0e6b4e,#11503c);color:#eafff6;border:none;border-radius:14px 4px 14px 14px}
+.dl-bub q{quotes:"「" "」";font-weight:700}
+.dl-bub.confirmq{border-left:3px solid var(--p3)}
+.dl-bub.wrongb{border:1.5px dashed #d9a6bd;background:#fdf5f8}
+.wrongtag{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--fail);background:var(--failbg);border:1px solid #e3c2cf;padding:4px 9px;border-radius:6px;margin-top:9px;width:fit-content}
+.dl-bub .wr{color:var(--fail);font-weight:700;text-decoration:underline;text-decoration-style:wavy;text-decoration-color:var(--fail);text-decoration-thickness:1.5px;text-underline-offset:3px}
+.dl-end{align-self:center;font-family:var(--mono);font-size:11px;color:var(--brand-deep);background:var(--brand-soft);border:1px solid #bfe0d1;padding:5px 13px;border-radius:20px;display:flex;align-items:center;gap:7px}
+.dl-end svg{width:13px;height:13px;stroke:var(--brand-deep);fill:none;stroke-width:2}
+.dl-loop{align-self:stretch;background:#fbf6ea;border:1px dashed #d9b96a;border-radius:12px;padding:11px 14px;font-size:12.5px;color:#8a6a1d;display:flex;align-items:center;gap:9px}
+.dl-loop svg{width:16px;height:16px;stroke:#cf9114;fill:none;stroke-width:2;flex:none}
+.branch-bar{padding:13px 20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--paper-2);flex-wrap:wrap}
+.branch-bar .bl{font-size:12.5px;color:var(--ink-3)}
+.bswitch{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+.bswitch button{font-family:var(--sans);font-size:12.5px;font-weight:700;padding:8px 14px;border:none;background:var(--card);color:var(--ink-3);cursor:pointer}
+.bswitch button.on{background:var(--ink);color:#fff}
+.scen-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:80px}
+.side-card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px 19px}
+.side-card .sh{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.side-card .sh::before{content:"";width:13px;height:1px;background:var(--line-2)}
+.skeys{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.skeys span{font-size:11.5px;font-family:var(--mono);background:var(--paper);border:1px solid var(--line);padding:3px 9px;border-radius:6px;color:var(--ink-2)}
+.side-card .snote{font-size:12.8px;color:var(--ink-2);line-height:1.6}
+.side-card .snote b{color:var(--brand-deep)}
+.sroute{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.sroute .sr{flex:1}
+.sroute .sr .rl{font-size:10px;color:var(--ink-3);font-family:var(--mono)}
+.sroute .sr .rvv{font-size:13.5px;font-weight:800;letter-spacing:-.01em}
+.sroute svg{width:17px;height:17px;stroke:var(--brand);fill:none;stroke-width:2}
+.smanual{font-size:12.5px;color:var(--ink-2)}
+.smanual .ms{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.smanual .ms:last-child{border-bottom:none}
+.smanual .ms .mn{flex:none;width:17px;height:17px;border-radius:50%;background:var(--paper);border:1px solid var(--line-2);color:var(--ink-3);font-family:var(--mono);font-size:9.5px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+.smanual .msrc{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-top:9px;text-align:right}
+
+/* ---------- app showcase ---------- */
+.app-sec{background:linear-gradient(180deg,#0a0e13,#0c1118);border-top:1px solid #1a232e;color:var(--a-tx);padding:72px 0 80px;position:relative;overflow:hidden}
+.app-sec::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(700px 360px at 78% 12%,rgba(255,90,82,.10),transparent 60%),radial-gradient(620px 320px at 18% 84%,rgba(55,216,147,.07),transparent 60%);}
+.app-sec .sec-no{color:var(--a-p2)}
+.app-sec .sec-head h2{color:#fff}
+.app-sec .sec-head p{color:var(--a-tx2)}
+.dev-toggle{display:flex;gap:0;border:1px solid var(--a-line);border-radius:12px;overflow:hidden;width:fit-content;margin-bottom:26px;position:relative;z-index:1}
+.dev-toggle button{font-family:var(--sans);font-size:14px;font-weight:700;padding:11px 24px;border:none;background:var(--a-surf);color:var(--a-tx2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:.18s}
+.dev-toggle button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9}
+.dev-toggle button.on{background:var(--a-p2);color:#06120c}
+.show{display:grid;grid-template-columns:1fr 360px;gap:42px;align-items:start;position:relative;z-index:1}
+.picker{display:flex;flex-direction:column;gap:11px}
+.picker .ph{font-family:var(--mono);font-size:12px;color:var(--a-tx3);letter-spacing:.04em;margin-bottom:3px}
+.pk{display:flex;align-items:center;gap:13px;text-align:left;width:100%;background:var(--a-surf);border:1px solid var(--a-line);color:var(--a-tx);padding:14px 15px;border-radius:13px;cursor:pointer;transition:.2s;position:relative;font-family:var(--sans)}
+.pk:hover{background:var(--a-surf2);border-color:#34424f}
+.pk.on{border-color:transparent;box-shadow:0 0 0 2px var(--ac),0 14px 30px -18px var(--ac)}
+.pk .pk-dot{width:11px;height:11px;border-radius:50%;background:var(--ac);flex:none;box-shadow:0 0 12px var(--ac)}
+.pk .pk-t{flex:1;min-width:0}
+.pk .pk-t b{display:block;font-size:14px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk .pk-t span{font-size:11.5px;color:var(--a-tx2);font-family:var(--mono)}
+.pk .pk-pr{font-size:11px;font-weight:800;color:var(--ac)}
+
+/* phone */
+.stage{display:flex;justify-content:center}
+.phone{width:340px;height:710px;background:#000;border-radius:46px;padding:11px;box-shadow:0 50px 90px -30px rgba(0,0,0,.8),0 0 0 2px #222,inset 0 0 0 2px #333;position:relative}
+.notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:30}
+.screen{width:100%;height:100%;background:var(--a-bg);border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.statusbar{height:42px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 6px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--a-tx);flex:none}
+.statusbar .sb-r{display:flex;align-items:center;gap:6px}
+.statusbar svg{width:16px;height:14px;fill:var(--a-tx)}
+.appbar{flex:none;padding:8px 18px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--a-line)}
+.appbar .at{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.01em;font-size:15px}
+.appbar .at .am{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--a-p2),#0e7a5b);display:grid;place-items:center}
+.appbar .at .am::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.appbar .back{background:none;border:none;color:var(--a-p2);font-size:13px;cursor:pointer;display:none;align-items:center;gap:4px;font-family:var(--sans);font-weight:600}
+.appbar .back svg{width:15px;height:15px;stroke:var(--a-p2);fill:none;stroke-width:2}
+.appbar .liveb{font-family:var(--mono);font-size:10px;color:var(--a-p5);display:flex;align-items:center;gap:5px}
+.appbar .liveb .d{width:6px;height:6px;border-radius:50%;background:var(--a-p5);animation:blink 1.4s infinite}
+.view{flex:1;overflow-y:auto;overflow-x:hidden}
+.view::-webkit-scrollbar{width:0}
+
+/* inbox */
+.inbox-head{padding:14px 18px 8px;display:flex;align-items:center;justify-content:space-between}
+.inbox-head .t{font-size:12px;color:var(--a-tx2);font-family:var(--mono)}
+.inbox-head .sort{font-size:11px;color:var(--a-tx3);font-family:var(--mono);display:flex;align-items:center;gap:4px}
+.ni{padding:13px 16px;border-bottom:1px solid var(--a-line);cursor:pointer;display:flex;gap:12px;transition:background .15s;position:relative}
+.ni:hover{background:var(--a-surf)}
+.ni .stripe{width:4px;border-radius:3px;flex:none;background:var(--ac)}
+.ni .ni-main{flex:1;min-width:0}
+.ni .ni-top{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.ni .ni-pr{font-size:10.5px;font-weight:800;color:#000;background:var(--ac);padding:2px 7px;border-radius:5px;letter-spacing:.02em}
+.ni .ni-pr.gho{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.ni .ni-time{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--a-tx3)}
+.ni h4{font-size:14px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ni p{font-size:12px;color:var(--a-tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.ni .chev{align-self:center;color:var(--a-tx3)}
+.ni .chev svg{width:16px;height:16px;stroke:var(--a-tx3);fill:none;stroke-width:2}
+.ni.done .ni-pr{background:var(--a-surf2);color:var(--a-tx2)}
+.ni.done h4{color:var(--a-tx2)}
+.st-chip{font-family:var(--mono);font-size:10.5px;padding:4px 10px;border-radius:6px;font-weight:700;letter-spacing:.02em;line-height:1;display:inline-flex;align-items:center}
+.ni .st-chip{font-size:9.5px;padding:3px 7px;border-radius:4px}
+.st-wait{color:var(--a-p3);background:rgba(243,183,58,.12);border:1px solid rgba(243,183,58,.3)}
+.st-sent{color:var(--a-p2);background:rgba(55,216,147,.1);border:1px solid rgba(55,216,147,.3)}
+.st-fail{color:var(--a-fail);background:rgba(255,125,157,.1);border:1px solid rgba(255,125,157,.35)}
+.st-auto{color:var(--a-tx2);background:var(--a-surf2);border:1px solid var(--a-line)}
+
+/* detail (app) */
+.detail{padding:0 0 24px}
+.d-hero{padding:18px 18px 20px;position:relative}
+.d-hero .pr-big{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:#000;background:var(--ac);padding:6px 13px;border-radius:8px;letter-spacing:.02em}
+.d-hero .pr-big.sev{animation:sev 1.8s infinite}
+@keyframes sev{0%,100%{box-shadow:0 0 0 0 rgba(255,90,82,.0)}50%{box-shadow:0 0 0 7px rgba(255,90,82,.18)}}
+.d-hero h3{font-size:20px;letter-spacing:-.025em;margin:14px 0 8px;line-height:1.25}
+.d-hero .d-meta{font-family:var(--mono);font-size:11.5px;color:var(--a-tx2);display:flex;gap:10px;flex-wrap:wrap}
+.d-hero .d-meta b{color:var(--ac)}
+.route{display:flex;align-items:center;gap:9px;margin:16px 18px;background:var(--a-surf);border:1px solid var(--a-line);border-radius:12px;padding:13px 15px}
+.route .rdept{flex:1}
+.route .rdept .rl{font-size:10.5px;color:var(--a-tx3);font-family:var(--mono);letter-spacing:.03em}
+.route .rdept .rvx{font-size:14.5px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
+.route .rarrow{color:var(--ac)}
+.route .rarrow svg{width:20px;height:20px;stroke:var(--ac);fill:none;stroke-width:2}
+.route .rdeliv{text-align:right}
+.route .rdeliv .rl{font-size:10.5px;color:var(--a-tx3);font-family:var(--mono)}
+.route .rdeliv .rvx{font-size:13px;font-weight:700;color:var(--ac);margin-top:2px;display:flex;align-items:center;gap:5px;justify-content:flex-end}
+.route .rdeliv .rvx svg{width:14px;height:14px;stroke:var(--ac);fill:none;stroke-width:2}
+.block{margin:0 18px 16px}
+.block .bh{font-size:11px;font-family:var(--mono);color:var(--a-tx3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.block .bh::before{content:"";width:14px;height:1px;background:var(--a-line)}
+.tr-row{display:flex;flex-direction:column;gap:9px}
+.bub{max-width:88%;padding:9px 13px;border-radius:14px;font-size:12.6px;line-height:1.52}
+.bub.sys{background:var(--a-surf2);color:var(--a-tx);border-radius:14px 14px 14px 4px;align-self:flex-start}
+.bub.caller{background:linear-gradient(135deg,#11503c,#0e6b4e);color:#eafff6;border-radius:14px 14px 4px 14px;align-self:flex-end}
+.bub.flag{align-self:stretch;max-width:100%;background:rgba(255,90,82,.08);border:1px solid rgba(255,90,82,.3);color:#ffb8b3;font-family:var(--mono);font-size:11.5px;display:flex;align-items:center;gap:8px}
+.bub.flag svg{width:15px;height:15px;stroke:var(--a-fail);fill:none;stroke-width:2;flex:none}
+.bub .who{display:block;font-size:10px;font-family:var(--mono);opacity:.6;margin-bottom:3px}
+.ai-card{background:var(--a-surf);border:1px solid var(--a-line);border-radius:13px;padding:14px;border-left:3px solid var(--ac)}
+.ai-card .ai-eng{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--a-p2);margin-bottom:9px}
+.ai-card .ai-eng .pd{width:5px;height:5px;border-radius:50%;background:var(--a-p2)}
+.ai-keys{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ai-keys span{font-size:11px;font-family:var(--mono);background:var(--a-surf2);border:1px solid var(--a-line);color:var(--ac);padding:3px 8px;border-radius:6px}
+.ai-card .ai-note{font-size:12.5px;color:var(--a-tx2);line-height:1.5}
+.ai-card .ai-note b{color:var(--a-tx)}
+.manual-card{background:var(--a-surf);border:1px solid var(--a-line);border-radius:13px;overflow:hidden}
+.manual-card .mh{padding:11px 14px;font-size:12px;font-weight:700;border-bottom:1px solid var(--a-line);display:flex;align-items:center;gap:8px;color:var(--a-tx)}
+.manual-card .mh svg{width:15px;height:15px;stroke:var(--a-p3);fill:none;stroke-width:1.8}
+.manual-card .mh .src{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--a-tx3);font-weight:400}
+.mstep{display:flex;gap:10px;padding:9px 14px;font-size:12.5px;color:var(--a-tx);border-bottom:1px solid rgba(39,50,63,.5)}
+.mstep:last-child{border-bottom:none}
+.mstep .mn{width:18px;height:18px;border-radius:50%;background:var(--a-surf2);color:var(--a-p3);font-family:var(--mono);font-size:10px;font-weight:700;display:grid;place-items:center;flex:none;margin-top:1px}
+.carenote{margin:0 18px 16px;font-size:11.5px;color:var(--a-tx2);background:rgba(55,216,147,.06);border:1px solid rgba(55,216,147,.22);border-radius:10px;padding:11px 13px;line-height:1.5}
+.carenote b{color:var(--a-p2)}
+.actions{display:flex;flex-direction:column;gap:9px;margin:18px 18px 8px}
+.act{padding:13px;border-radius:12px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.act svg{width:17px;height:17px;stroke-width:2;fill:none}
+.act.primary{background:var(--ac);color:#06120c;box-shadow:0 10px 26px -12px var(--ac)}
+.act.primary svg{stroke:#06120c}
+.act.primary:hover{filter:brightness(1.08)}
+.act.danger{background:transparent;color:var(--a-fail);border:1.5px solid var(--a-fail)}
+.act.danger svg{stroke:var(--a-fail)}
+.act.ghost{background:var(--a-surf2);color:var(--a-tx);border:1px solid var(--a-line)}
+.act.ghost svg{stroke:var(--a-tx)}
+.act.done{background:rgba(55,216,147,.1);color:var(--a-p2);border:1px solid rgba(55,216,147,.3);cursor:default}
+.act.done svg{stroke:var(--a-p2)}
+
+/* lockscreen overlay */
+.lock{position:absolute;inset:0;border-radius:36px;z-index:25;background:
+  linear-gradient(180deg,rgba(8,11,16,.55),rgba(8,11,16,.92)),
+  radial-gradient(140% 80% at 50% 0%,#231016,#0a0e13);
+  display:flex;flex-direction:column;padding:50px 18px 26px;opacity:0;pointer-events:none;transition:opacity .35s}
+.lock.show{opacity:1;pointer-events:auto}
+.lock .lt{text-align:center;font-family:var(--mono);color:var(--a-tx2);font-size:13px}
+.lock .lclock{text-align:center;font-family:var(--mono);font-weight:700;font-size:62px;color:#fff;letter-spacing:-.02em;line-height:1.1;margin-top:2px}
+.lock .ldate{text-align:center;color:var(--a-tx2);font-size:13px;margin-bottom:auto}
+.lock .lcard{background:rgba(30,18,18,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,90,82,.35);border-radius:20px;padding:18px;animation:pop .4s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.lock .lcard .lc-top{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.lock .lcard .lc-ico{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--a-p2),#0e7a5b);display:grid;place-items:center}
+.lock .lcard .lc-ico::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.lock .lcard .lc-app{font-size:12px;font-weight:700}
+.lock .lcard .lc-sev{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;color:#000;background:var(--a-p5);padding:3px 8px;border-radius:6px;animation:sev 1.6s infinite}
+.lock .lcard h4{font-size:17px;letter-spacing:-.02em;margin-bottom:5px}
+.lock .lcard p{font-size:13px;color:var(--a-tx2);line-height:1.5}
+.lock .lcard .lc-loc{font-family:var(--mono);font-size:11px;color:var(--a-p5);margin-top:9px;display:flex;align-items:center;gap:5px}
+.lock .lc-actions{display:flex;gap:10px;margin-top:14px}
+.lock .lc-actions button{flex:1;padding:13px;border-radius:13px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:7px}
+.lock .lc-actions .answer{background:var(--a-p2);color:#06120c}
+.lock .lc-actions .open{background:rgba(255,255,255,.12);color:#fff}
+.lock .lc-actions svg{width:16px;height:16px;stroke-width:2;fill:none}
+.lock .lc-actions .answer svg{stroke:#06120c}
+.lock .lc-actions .open svg{stroke:#fff}
+.lock .lhint{text-align:center;font-size:11px;color:var(--a-tx3);margin-top:14px;font-family:var(--mono)}
+
+/* status view */
+.stat{padding:18px}
+.stat-h{font-size:13px;color:var(--a-tx2);font-family:var(--mono);margin-bottom:14px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:18px}
+.stat-c{background:var(--a-surf);border:1px solid var(--a-line);border-radius:13px;padding:15px}
+.stat-c .v{font-family:var(--mono);font-size:30px;font-weight:700;line-height:1}
+.stat-c .l{font-size:11.5px;color:var(--a-tx2);margin-top:7px}
+.stat-c.hl{border-color:rgba(55,216,147,.3)}
+.stat-c.hl .v{color:var(--a-p2)}
+.dist{background:var(--a-surf);border:1px solid var(--a-line);border-radius:13px;padding:15px}
+.dist .dl{font-size:11.5px;color:var(--a-tx2);margin-bottom:11px;font-family:var(--mono)}
+.dbar{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.dbar .dname{font-size:11.5px;width:36px;color:var(--a-tx2)}
+.dbar .dtrack{flex:1;height:8px;background:var(--a-surf2);border-radius:5px;overflow:hidden}
+.dbar .dfill{height:100%;border-radius:5px}
+.dbar .dv{font-family:var(--mono);font-size:11px;color:var(--a-tx2);width:22px;text-align:right}
+
+/* tabbar */
+.tabbar{flex:none;display:flex;border-top:1px solid var(--a-line);background:rgba(10,14,19,.9);backdrop-filter:blur(8px);padding:8px 0 14px}
+.tab{flex:1;background:none;border:none;color:var(--a-tx3);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--sans);font-size:10.5px;font-weight:600}
+.tab svg{width:21px;height:21px;stroke:var(--a-tx3);fill:none;stroke-width:1.8}
+.tab.on{color:var(--a-p2)}
+.tab.on svg{stroke:var(--a-p2)}
+.tab .badge{position:absolute;transform:translate(13px,-4px);background:var(--a-p5);color:#000;font-family:var(--mono);font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:8px;display:grid;place-items:center;padding:0 3px}
+.lock-btn{margin-top:22px;width:100%;background:rgba(255,90,82,.1);border:1px solid rgba(255,90,82,.3);color:var(--a-p5);padding:13px;border-radius:13px;font-family:var(--sans);font-weight:700;font-size:13.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.lock-btn:hover{background:rgba(255,90,82,.16)}
+.lock-btn svg{width:17px;height:17px;stroke:var(--a-p5);fill:none;stroke-width:2}
+
+/* ---------- web mockup (browser) ---------- */
+.web-stage{display:none;position:relative;z-index:1}
+.web-stage.on{display:block}
+.app-stage{display:none}
+.app-stage.on{display:grid}
+.browser{background:var(--a-bg);border:1px solid var(--a-line);border-radius:16px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.85)}
+.b-chrome{display:flex;align-items:center;gap:12px;padding:11px 16px;background:var(--a-surf);border-bottom:1px solid var(--a-line)}
+.b-dots{display:flex;gap:6px}
+.b-dots span{width:11px;height:11px;border-radius:50%}
+.b-dots span:nth-child(1){background:#ff5f57}.b-dots span:nth-child(2){background:#febc2e}.b-dots span:nth-child(3){background:#28c840}
+.b-url{flex:1;max-width:430px;background:var(--a-bg);border:1px solid var(--a-line);border-radius:8px;padding:6px 13px;font-family:var(--mono);font-size:11.5px;color:var(--a-tx2);display:flex;align-items:center;gap:7px}
+.b-url svg{width:12px;height:12px;stroke:var(--a-p2);fill:none;stroke-width:2;flex:none}
+.b-user{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--a-tx3);display:flex;align-items:center;gap:7px}
+.b-user .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a-p3),#a06a10)}
+.b-body{display:grid;grid-template-columns:300px 1fr;min-height:560px}
+.b-list{border-right:1px solid var(--a-line);background:rgba(18,25,34,.5);display:flex;flex-direction:column}
+.b-list .bl-head{padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--a-line)}
+.b-list .bl-head b{font-size:13px;color:var(--a-tx)}
+.b-list .bl-head span{font-family:var(--mono);font-size:10px;color:var(--a-tx3)}
+.wi{display:flex;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(39,50,63,.6);cursor:pointer;transition:background .15s;align-items:flex-start}
+.wi:hover{background:var(--a-surf)}
+.wi.on{background:var(--a-surf2)}
+.wi .stripe{width:3px;align-self:stretch;border-radius:3px;background:var(--ac);flex:none}
+.wi .wm{flex:1;min-width:0}
+.wi .wm .wt{display:flex;gap:6px;align-items:center;margin-bottom:2px}
+.wi .wm .wt .wp{font-size:9.5px;font-weight:800;color:#000;background:var(--ac);padding:1px 6px;border-radius:4px}
+.wi .wm .wt .wtime{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--a-tx3)}
+.wi .wm h5{font-size:12.5px;color:var(--a-tx);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wi .wm .wsub{margin-top:3px}
+.b-detail{padding:22px 26px;overflow:hidden}
+.bd-top{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.bd-top .pr-big{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:#000;background:var(--ac);padding:5px 12px;border-radius:8px}
+.bd-top h3{font-size:20px;letter-spacing:-.025em;color:#fff;width:100%}
+.bd-top .d-meta{font-family:var(--mono);font-size:11.5px;color:var(--a-tx2);display:flex;gap:10px;flex-wrap:wrap}
+.bd-top .d-meta b{color:var(--ac)}
+.bd-cols{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+.bd-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.bd-block .bh{font-size:10.5px;font-family:var(--mono);color:var(--a-tx3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.bd-block .bh::before{content:"";width:13px;height:1px;background:var(--a-line)}
+/* timeline */
+.tl{background:var(--a-surf);border:1px solid var(--a-line);border-radius:13px;padding:15px 16px;display:flex;flex-direction:column;gap:0}
+.tl-step{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl-step:last-child{padding-bottom:0}
+.tl-step::before{content:"";position:absolute;left:9px;top:21px;bottom:0;width:2px;background:var(--a-line)}
+.tl-step:last-child::before{display:none}
+.tl-step .td{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--a-surf2);border:1.5px solid var(--a-line);z-index:1}
+.tl-step.done .td{background:rgba(55,216,147,.15);border-color:var(--a-p2)}
+.tl-step.done .td::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--a-p2)}
+.tl-step.now .td{border-color:var(--a-p3);background:rgba(243,183,58,.13)}
+.tl-step.now .td::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--a-p3);animation:blink 1.4s infinite}
+.tl-step.fail .td{border-color:var(--a-fail);background:rgba(255,125,157,.13)}
+.tl-step.fail .td::after{content:"✕";color:var(--a-fail);font-size:9px;font-weight:800}
+.tl-step .tt b{display:block;font-size:13px;color:var(--a-tx);letter-spacing:-.01em}
+.tl-step .tt span{font-size:11px;color:var(--a-tx2);font-family:var(--mono)}
+.tl-step.dim .tt b{color:var(--a-tx3)}
+/* web action buttons */
+.wact{display:flex;flex-direction:column;gap:9px}
+.wbtn{padding:12px 15px;border-radius:11px;font-size:13.5px;font-weight:700;border:none;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.wbtn svg{width:16px;height:16px;stroke-width:2;fill:none}
+.wbtn.primary{background:var(--ac,var(--a-p2));color:#06120c}
+.wbtn.primary svg{stroke:#06120c}
+.wbtn.primary:hover{filter:brightness(1.08)}
+.wbtn.warn{background:var(--a-fail);color:#1a050b}
+.wbtn.warn svg{stroke:#1a050b}
+.wbtn.ghost{background:var(--a-surf2);color:var(--a-tx);border:1px solid var(--a-line)}
+.wbtn.ghost svg{stroke:var(--a-tx)}
+.wbtn.done{background:rgba(55,216,147,.12);color:var(--a-p2);border:1px solid rgba(55,216,147,.35);cursor:default}
+.wbtn.done svg{stroke:var(--a-p2)}
+.wnote{font-size:11.5px;color:var(--a-tx2);background:var(--a-surf);border:1px solid var(--a-line);border-radius:10px;padding:10px 13px;line-height:1.55}
+.wnote b{color:var(--a-tx)}
+.failbox{background:rgba(255,125,157,.07);border:1px solid rgba(255,125,157,.3);border-radius:12px;padding:13px 15px}
+.failbox .fb-t{display:flex;align-items:center;gap:8px;color:#ffc0d1;font-weight:700;font-size:13px;margin-bottom:6px}
+.failbox .fb-t svg{width:16px;height:16px;stroke:var(--a-fail);fill:none;stroke-width:2}
+.failbox p{font-size:12px;color:var(--a-tx2);line-height:1.55}
+
+/* ---------- channels ---------- */
+.chan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chan{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:21px 22px;display:flex;flex-direction:column;gap:13px}
+.chan .ch-top{display:flex;align-items:center;gap:10px}
+.chan .ch-top .ci{width:38px;height:38px;border-radius:11px;background:var(--brand-soft);border:1px solid #bfe0d1;display:grid;place-items:center}
+.chan .ch-top .ci svg{width:18px;height:18px;stroke:var(--brand-deep);fill:none;stroke-width:1.8}
+.chan .ch-top b{font-size:15.5px;letter-spacing:-.01em}
+.chan .ch-top small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.chan>p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.sms-mock{background:#101418;border-radius:13px;padding:14px;border:1px solid #232b34}
+.sms-mock .sm-from{font-family:var(--mono);font-size:10px;color:#8c98a5;margin-bottom:8px}
+.sms-mock .sm-bub{background:#1d2630;color:#e9eef3;border-radius:4px 13px 13px 13px;padding:10px 13px;font-size:12.3px;line-height:1.55;max-width:95%}
+.sms-mock .sm-bub b{color:#ff8a3d}
+.mail-mock{background:var(--paper-2);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.mail-mock .mm-h{padding:11px 14px;border-bottom:1px solid var(--line);font-size:12px}
+.mail-mock .mm-h .mm-sub{font-weight:800;font-size:13px;letter-spacing:-.01em;margin-bottom:3px}
+.mail-mock .mm-h .mm-meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.mail-mock .mm-b{padding:12px 14px;font-size:12.3px;color:var(--ink-2);line-height:1.62}
+.mail-mock .mm-b b{color:var(--ink)}
+
+/* footer */
+.foot{border-top:1px solid var(--line);padding:34px 0;color:var(--ink-3);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.foot .mono{font-size:12px}
+
+@media(max-width:980px){
+  .bd-cols{grid-template-columns:1fr}
+  .b-body{grid-template-columns:1fr}
+  .b-list{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--a-line)}
+  .b-list .bl-head{display:none}
+  .wi{min-width:210px;border-bottom:none;border-right:1px solid rgba(39,50,63,.6)}
+}
+@media(max-width:880px){
+  .prob-grid{grid-template-columns:1fr}
+  .show{grid-template-columns:1fr;gap:30px}
+  .picker{order:2;flex-direction:row;flex-wrap:wrap}
+  .pk{flex:1;min-width:160px}
+  .picker .ph{width:100%}
+  .stage{order:1}
+  .thr{grid-template-columns:1fr}
+  .fork{grid-template-columns:1fr}
+  .scen-grid{grid-template-columns:1fr}
+  .scen-side{position:static}
+  .chan-grid{grid-template-columns:1fr}
+  .dl-step{width:46px}
+}
+@media(max-width:560px){
+  .farrow{transform:rotate(90deg)}
+  .fstep{min-width:auto;flex-basis:100%}
+  .flow-track{flex-direction:column}
+  .dl-step{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker rv"><span class="dot"></span> 야간·휴일 민원 응대 자동화</span>
+    <h1 class="rv" style="animation-delay:.05s">야간·휴일 민원을<br><b>접수·확인·전달</b>까지<br>자동으로 처리합니다.</h1>
+    <p class="lead rv" style="animation-delay:.12s">근무 외 시간 민원 전화를 AI가 직접 받아 안내하고, 발화 내용을 분류·요약해 민원인에게 <b>직접 확인</b>받은 뒤 기록합니다. 당직자는 웹·앱·문자·메일로 받아 확인 버튼 하나로 담당 부서에 전달합니다.</p>
+    <div class="tech-row rv" style="animation-delay:.18s">
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg> 음성 안내·발화 전사</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> 요약 후 민원인 확인</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg> 5단계 우선순위 분류</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> 웹·앱·문자·메일 전달</span>
+    </div>
+  </div>
+</header>
+
+<!-- 01 PROBLEM -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <h2>현행 방식의 한계</h2>
+      <p>현행 당직 매뉴얼은 9개 분야 45개 상황 유형을 다루는 100페이지가 넘는 문서입니다. 야간에는 단 한 명의 당직자가 접수·판단·전파를 모두 수행합니다.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="callout rv">
+        <span class="src">현행 처리 흐름</span>
+        <h3>민원이 오면, 당직자가<br>매뉴얼을 직접 찾습니다.</h3>
+        <p>100페이지가 넘는 문서에서 담당 부서·연락처·대응 절차를 찾아 판단하고 직접 연락합니다. 분류 기준이 담당자마다 달라질 수 있고, 접수가 몰리면 누락 가능성도 생깁니다.</p>
+      </div>
+      <div class="burden">
+        <div class="bnum rv" style="animation-delay:.08s">
+          <div class="v">45<small> 개 유형</small></div>
+          <div class="l">재난·환경·복지·교통·보건 등 <b>9개 분야</b>의 상황 유형을 당직자 1인이 분류</div>
+        </div>
+        <div class="bnum rv" style="animation-delay:.16s">
+          <div class="v">100<small> + 페이지</small></div>
+          <div class="l">부서별 담당자·연락처·긴급조치 절차가 흩어진 문서를 <b>한밤중에 검색</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 PROCESS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <h2>전체 처리 흐름</h2>
+      <p>통화 단계(민원인 관점)와 접수 이후(당직자 관점)의 두 흐름으로 작동합니다. 민원인이 내용을 확인하지 않으면 기록이 확정되지 않고, 당직자의 확인 없이는 부서로 전달되지 않습니다.</p>
+    </div>
+
+    <!-- Flow A : call -->
+    <div class="flow rv">
+      <div class="flow-title"><span class="fn">FLOW A</span><h3>통화 단계 — 민원인 관점</h3><small>· 민원인이 내용을 확인해야 기록이 확정됩니다</small></div>
+      <div class="flow-track">
+        <div class="fstep">
+          <div class="ico"><span class="num">1</span><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg></div>
+          <h4>자동 음성 안내</h4><small>"당직 시간 자동접수<br>시스템입니다" 고지</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">2</span><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg></div>
+          <h4>민원인 발화</h4><small>자유 발화 (3문장 내외)<br>실시간 전사</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep core">
+          <div class="ico"><span class="num">3</span><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg></div>
+          <h4>분류·요약 확인</h4><small>기록할 요약을 읽어주고<br>"내용이 맞으십니까?"</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">4</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>기록 완료·종료</h4><small>"담당자에게 전달해<br>처리 후 안내드리겠습니다"</small>
+        </div>
+      </div>
+      <div class="fork">
+        <div class="fork-card ok">
+          <span class="fk">요약이 맞은 경우</span>
+          <div class="ft"><b>민원 기록 확정 → 통화 종료</b>
+            <span>"민원 기록이 완료되었습니다. 담당자에게 연락을 전달하겠습니다 / 곧 처리하여 알려드리겠습니다"로 종료합니다.</span></div>
+        </div>
+        <div class="fork-card re">
+          <span class="fk">요약이 틀린 경우</span>
+          <div class="ft"><b>처음부터 다시 접수</b>
+            <span>요약이 사실과 다르면 기록하지 않고, ① 자동 안내 단계로 돌아가 민원 내용을 다시 받습니다.</span>
+            <span class="loopline"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> ①번 단계로 재시작</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow B : after -->
+    <div class="flow rv" style="animation-delay:.08s">
+      <div class="flow-title"><span class="fn">FLOW B</span><h3>접수 이후 — 당직자 관점</h3><small>· 확인 버튼 하나로 부서에 전달됩니다</small></div>
+      <div class="flow-track">
+        <div class="fstep">
+          <div class="ico"><span class="num">5</span><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg></div>
+          <h4>민원 기록 생성</h4><small>전사·요약·분류·우선순위<br>매뉴얼 절차 자동 첨부</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep core">
+          <div class="ico"><span class="num">6</span><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+          <h4>당직자 수신·확인</h4><small>웹 · 앱 · 문자 · 메일<br>4개 채널 동시 전달</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">7</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>전달 확인 (confirm)</h4><small>내용 검토 후<br>[담당부서 전달] 버튼</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">8</span><svg viewBox="0 0 24 24"><path d="M3 3l18 9-18 9 4-9-4-9z"/></svg></div>
+          <h4>담당부서 전달</h4><small>부서 담당자 메일·문자<br>처리 결과 민원인 회신</small>
+        </div>
+      </div>
+      <div class="fork">
+        <div class="fork-card ok">
+          <span class="fk">기록 정상</span>
+          <div class="ft"><b>확인 → 부서 전달 → 처리</b>
+            <span>당직자가 요약·분류를 확인(confirm)하면 즉시 해당 부서 담당자에게 전달되고, 모든 이력이 기록됩니다.</span></div>
+        </div>
+        <div class="fork-card fail">
+          <span class="fk">기록 실패</span>
+          <div class="ft"><b>당직자가 민원인에게 재전화</b>
+            <span>음성 인식 불충분·통화 중단 등으로 기록이 실패하면, 확보된 발신번호로 당직자가 직접 전화해 내용을 확인하고, <b>보정한 내용</b>으로 부서에 전달합니다.</span>
+            <span class="loopline"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .35 1.95.66 2.87a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.21-1.21a2 2 0 012.11-.45c.92.31 1.87.53 2.87.66A2 2 0 0122 16.92z"/></svg> 재전화 → 내용 보정 → 부서 전달</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow rv" style="animation-delay:.14s">
+      <div class="scale" style="border-top:none;padding-top:0;margin-top:0">
+        <div class="scale-label">우선순위 5단계 — 통화 내용을 실시간 분석해 위험도 자동 산정</div>
+        <div class="scale-bar">
+          <div class="sb" style="background:var(--p1)">일반<small>LV.1</small></div>
+          <div class="sb" style="background:var(--p2)">관심<small>LV.2</small></div>
+          <div class="sb" style="background:var(--p3)">주의<small>LV.3</small></div>
+          <div class="sb" style="background:var(--p4)">경계<small>LV.4</small></div>
+          <div class="sb" style="background:var(--p5)">심각<small>LV.5</small></div>
+        </div>
+        <div class="thr">
+          <div class="thr-card">
+            <div class="dn">안전·재난 부서</div>
+            <span class="tr" style="background:var(--p4bg);color:var(--p4)">경계(LV.4) 이상</span>
+            <div class="ac"><svg viewBox="0 0 24 24" stroke="var(--brand)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .35 1.95.66 2.87a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.21-1.21a2 2 0 012.11-.45c.92.31 1.87.53 2.87.66A2 2 0 0122 16.92z"/></svg> 즉시 전화 호출</div>
+          </div>
+          <div class="thr-card">
+            <div class="dn">환경·생활 부서</div>
+            <span class="tr" style="background:var(--p3bg);color:var(--p3)">주의(LV.3) 이상</span>
+            <div class="ac"><svg viewBox="0 0 24 24" stroke="var(--brand)"><path d="M4 4h16v12H8l-4 4z"/></svg> 문자 / 메일 알림</div>
+          </div>
+          <div class="thr-card">
+            <div class="dn">일반 행정 민원</div>
+            <span class="tr" style="background:var(--p2bg);color:var(--p2)">관심(LV.2) 이상</span>
+            <div class="ac"><svg viewBox="0 0 24 24" stroke="var(--brand)"><rect x="6" y="2" width="12" height="20" rx="3"/></svg> 앱 알림 / 자동 기록</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SCENARIOS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <h2>분야별 통화 시나리오</h2>
+      <p>당직 매뉴얼에서 민원 빈도가 높은 세 분야 — 도로 파손(§35), 쓰레기(§22), 불법주정차(§43) — 의 실제 대화 흐름입니다. 안내 → 발화 → 요약 확인 → 내용 확인 → 종료의 5단계가 모든 통화에 동일하게 적용됩니다.</p>
+    </div>
+    <div class="scen-tabs" id="scenTabs"></div>
+    <div class="scen-grid">
+      <div class="scen-call rv">
+        <div class="sc-head" id="scHead"></div>
+        <div class="dlg" id="dlgBody"></div>
+        <div class="branch-bar">
+          <span class="bl">AI 요약이 틀렸다면? — 두 분기를 직접 확인해 보세요</span>
+          <div class="bswitch">
+            <button id="br-ok" class="on" onclick="setBranch('ok')">요약이 맞은 경우</button>
+            <button id="br-no" onclick="setBranch('no')">요약이 틀린 경우</button>
+          </div>
+        </div>
+      </div>
+      <div class="scen-side" id="scenSide"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 MOCKUPS -->
+<section class="app-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <h2>당직자가 받는 화면 — 앱 · 웹</h2>
+      <p>당직자는 휴대폰 앱과 웹 대시보드 어디서든 같은 민원을 확인합니다. 웹에서는 [담당부서 전달 확인] 버튼을 직접 눌러 전달 과정을, 기록 실패 건에서는 재전화 → 보정 → 전달 흐름을 체험할 수 있습니다.</p>
+    </div>
+
+    <div class="dev-toggle">
+      <button id="dev-app" class="on" onclick="setDevice('app')"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> 모바일 앱</button>
+      <button id="dev-web" onclick="setDevice('web')"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg> 웹 대시보드</button>
+    </div>
+
+    <!-- APP STAGE -->
+    <div class="show app-stage on" id="appStage">
+      <div class="picker">
+        <div class="ph">사례를 선택하세요</div>
+      </div>
+
+      <div class="stage">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="lock" id="lock">
+              <div class="lt">관악 당직</div>
+              <div class="lclock">01:07</div>
+              <div class="ldate">3월 14일 금요일</div>
+              <div class="lcard">
+                <div class="lc-top">
+                  <div class="lc-ico"></div>
+                  <span class="lc-app">관악 당직 · 긴급 알림</span>
+                  <span class="lc-sev">심각 LV.5</span>
+                </div>
+                <h4>도로 침수·차량 고립 신고</h4>
+                <p>가게 앞 도로가 침수되고 지나던 차량이 빠져 인명 위험이 보고되었습니다.</p>
+                <div class="lc-loc"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" style="width:13px;height:13px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> 호암로OO길 OO 일대 · 안전관리 / 도로관리과</div>
+                <div class="lc-actions">
+                  <button class="open" onclick="closeLock()"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg> 상세 열기</button>
+                  <button class="answer" onclick="closeLock()"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .35 1.95.66 2.87a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.21-1.21a2 2 0 012.11-.45c.92.31 1.87.53 2.87.66A2 2 0 0122 16.92z"/></svg> 즉시 호출</button>
+                </div>
+              </div>
+              <div class="lhint">잠금 화면에서 바로 확인 — 앱 진입 불필요</div>
+            </div>
+
+            <div class="statusbar">
+              <span>01:07</span>
+              <span class="sb-r">
+                <svg viewBox="0 0 18 14"><rect x="0" y="9" width="3" height="5" rx="1"/><rect x="4" y="6" width="3" height="8" rx="1"/><rect x="8" y="3" width="3" height="11" rx="1"/><rect x="12" y="0" width="3" height="14" rx="1" opacity=".4"/></svg>
+                <svg viewBox="0 0 18 14"><path d="M9 11.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM4.5 8.5C5.7 7.4 7.3 6.8 9 6.8s3.3.6 4.5 1.7M1.5 5.5C3.6 3.6 6.2 2.5 9 2.5s5.4 1.1 7.5 3"/></svg>
+                <svg viewBox="0 0 18 14"><rect x="0" y="2" width="15" height="10" rx="2.5" opacity=".5"/><rect x="1.5" y="3.5" width="9" height="7" rx="1.2"/><rect x="16" y="5" width="2" height="4" rx="1"/></svg>
+              </span>
+            </div>
+
+            <div class="appbar">
+              <div class="at" id="appTitle"><span class="am"></span> 관악 당직</div>
+              <button class="back" id="backBtn" onclick="showInbox()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg> 목록</button>
+              <div class="liveb" id="liveBadge"><span class="d"></span> 야간 자동응대 ON</div>
+            </div>
+
+            <div class="view" id="view"></div>
+
+            <div class="tabbar">
+              <button class="tab on" id="tab-inbox" onclick="showInbox()" style="position:relative">
+                <svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg>
+                <span>받은 민원</span><span class="badge" id="inboxBadge">2</span>
+              </button>
+              <button class="tab" id="tab-stat" onclick="showStat()">
+                <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+                <span>야간 현황</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap app-stage on" id="lockBtnWrap" style="padding:0;margin-top:18px;display:block">
+      <button class="lock-btn" onclick="openLock()" style="max-width:360px;margin-left:auto;margin-right:0">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1"/></svg>
+        심각(LV.5) 잠금화면 알림 미리보기
+      </button>
+    </div>
+
+    <!-- WEB STAGE -->
+    <div class="web-stage" id="webStage">
+      <div class="browser rv">
+        <div class="b-chrome">
+          <div class="b-dots"><span></span><span></span><span></span></div>
+          <div class="b-url"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> dangjik.gwanak.go.kr — 당직 민원 대시보드</div>
+          <div class="b-user"><span class="av"></span> 당직사령 · 야간</div>
+        </div>
+        <div class="b-body">
+          <aside class="b-list" id="webList">
+            <div class="bl-head"><b>야간 접수 민원</b><span>2026.03.14</span></div>
+          </aside>
+          <main class="b-detail" id="webDetail"></main>
+        </div>
+      </div>
+      <p style="margin-top:16px;font-size:13px;color:var(--a-tx2);position:relative;z-index:1">
+        ▲ 목록에서 민원을 선택하고, <b style="color:var(--a-p2)">[담당부서 전달 확인]</b> 버튼과
+        기록 실패 건의 <b style="color:var(--a-fail)">[민원인 재전화]</b> 버튼을 직접 눌러보세요. 상태 타임라인이 실시간으로 바뀝니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CHANNELS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <h2>당직자에게 닿는 4개 채널</h2>
+      <p>같은 민원 기록이 웹·앱·문자·메일로 동시에 전달됩니다. 어떤 채널로 확인하든 동일한 요약·분류·매뉴얼 절차를 보게 되고, 전달 확인은 한 곳에서 하면 모든 채널에 반영됩니다.</p>
+    </div>
+    <div class="chan-grid">
+      <div class="chan rv">
+        <div class="ch-top">
+          <span class="ci"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+          <div><b>모바일 앱 · 푸시</b><small>긴급 건은 잠금화면 표출 + 전화 호출</small></div>
+        </div>
+        <p>경계(LV.4) 이상은 푸시와 함께 전화 호출이 병행됩니다. 잠금화면에서 바로 상세를 열어 매뉴얼 절차까지 확인합니다.</p>
+      </div>
+      <div class="chan rv" style="animation-delay:.06s">
+        <div class="ch-top">
+          <span class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span>
+          <div><b>웹 대시보드</b><small>당직실 PC — 전체 현황·전달 확인</small></div>
+        </div>
+        <p>당직실에서는 웹으로 전체 민원 흐름을 한눈에 봅니다. 전달 확인(confirm), 기록 실패 건 재전화·보정도 웹에서 처리합니다.</p>
+      </div>
+      <div class="chan rv" style="animation-delay:.12s">
+        <div class="ch-top">
+          <span class="ci"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg></span>
+          <div><b>문자 (SMS)</b><small>앱 미설치·데이터 불통 시 보조 채널</small></div>
+        </div>
+        <div class="sms-mock">
+          <div class="sm-from">발신: 관악 당직 시스템 (02-879-XXXX)</div>
+          <div class="sm-bub">[관악 당직] <b>경계 LV.4</b> 도로 파손(포트홀) · 봉천로 OO 횡단보도 앞. 야간 이륜차 사고 우려. 도로관리과 배정. 상세·전달확인 ▸ dangjik.gwanak.go.kr/c/C-0231</div>
+        </div>
+      </div>
+      <div class="chan rv" style="animation-delay:.18s">
+        <div class="ch-top">
+          <span class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span>
+          <div><b>메일</b><small>전사 전문·근거 포함 — 부서 인계용</small></div>
+        </div>
+        <div class="mail-mock">
+          <div class="mm-h">
+            <div class="mm-sub">[경계 LV.4] 도로 파손(포트홀) — 봉천로 OO 횡단보도 앞</div>
+            <div class="mm-meta">보낸사람: 당직민원시스템 &lt;dangjik@gwanak.go.kr&gt; · 받는사람: 당직사령, 도로관리과</div>
+          </div>
+          <div class="mm-b">민원 요약, <b>통화 전사 전문</b>, AI 분류 근거, 매뉴얼 §35 절차가 첨부됩니다. 비급박 건은 매뉴얼에 따라 <b>도로관리과 담당자 메일 전달</b>이 표준 절차이므로, 메일 채널이 곧 인계 기록이 됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="sec" style="padding-top:48px">
+  <div class="wrap">
+    <div class="foot">
+      <span>관악구청 종합상황실 · 야간/휴일 민원응대 시스템 개편 제안</span>
+      <span class="mono">Artaud AI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const PR = {
+  1:{ko:'일반', lv:'LV.1', ac:'var(--a-p1)', dac:'var(--p1)', dbg:'var(--p1bg)'},
+  2:{ko:'관심', lv:'LV.2', ac:'var(--a-p2)', dac:'var(--p2)', dbg:'var(--p2bg)'},
+  3:{ko:'주의', lv:'LV.3', ac:'var(--a-p3)', dac:'var(--p3)', dbg:'var(--p3bg)'},
+  4:{ko:'경계', lv:'LV.4', ac:'var(--a-p4)', dac:'var(--p4)', dbg:'var(--p4bg)'},
+  5:{ko:'심각', lv:'LV.5', ac:'var(--a-p5)', dac:'var(--p5)', dbg:'var(--p5bg)'},
+};
+const ICON = {
+  phone:'<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .35 1.95.66 2.87a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.21-1.21a2 2 0 012.11-.45c.92.31 1.87.53 2.87.66A2 2 0 0122 16.92z"/>',
+  msg:'<path d="M4 4h16v12H8l-4 4z"/>',
+  app:'<rect x="6" y="2" width="12" height="20" rx="3"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  alert:'<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/>',
+  book:'<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+  loc:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
+  send:'<path d="M3 3l18 9-18 9 4-9-4-9z"/>',
+  redo:'<path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',
+};
+const GREET = '안녕하세요, 관악구청 야간·휴일 민원 자동접수 시스템입니다. 지금은 당직 시간으로, 말씀하신 내용을 기록하여 담당 부서에 전달해 드립니다. 어떤 민원인지 편하게 말씀해 주세요.';
+
+const CASES = [
+  /* ---- 도로 파손 ---- */
+  {
+    id:'C-0231', time:'23:48', pr:4, scen:'road', scenLabel:'도로 파손',
+    field:'기반시설', dept:'도로관리과', status:'wait',
+    title:'도로 파손(포트홀) — 야간 사고 우려',
+    addr:'봉천로 OO 횡단보도 앞',
+    callerNo:'010-23XX-91XX',
+    deliver:'즉시 전화 호출', deliverIcon:'phone',
+    summary:'횡단보도 앞 포트홀, 이륜차 사고 우려 — 야간 시인성 불량',
+    transcript:[
+      {who:'sys', label:'시스템 · 자동 안내', step:1, stepKo:'자동 안내', text:GREET},
+      {who:'caller', label:'민원인', step:2, stepKo:'민원인 발화', text:'여기 봉천로 OO 횡단보도 앞인데요, 도로에 구멍이 크게 파였어요. 방금 오토바이가 지나가다가 바퀴가 빠져서 넘어질 뻔했어요. 밤이라 구멍이 잘 보이지도 않아서 큰 사고가 날 것 같아요.'},
+      {who:'sys', label:'시스템 · 분류·요약 확인', step:3, stepKo:'분류·요약 확인', confirm:true, text:'말씀하신 내용을 정리하겠습니다. <q>봉천로 OO 횡단보도 앞 도로 파손(포트홀), 야간 시인성 불량으로 차량·이륜차 사고 우려</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 맞아요. 빨리 좀 막아주세요.'},
+      {who:'sys', label:'시스템 · 종료', step:5, stepKo:'기록 완료·종료', text:'민원 기록이 완료되었습니다. 사고 우려가 있는 사안으로 분류되어 당직 담당자에게 즉시 전달되며, 담당 부서에서 조치 후 처리 결과를 문자로 알려드리겠습니다. 신고해 주셔서 감사합니다.'},
+    ],
+    confirmWrong:'말씀하신 내용을 정리하겠습니다. <q>봉천로 OO <span class="wr">버스정류장 앞</span> 도로 파손(포트홀), 야간 시인성 불량으로 차량·이륜차 사고 우려</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?',
+    disagree:[
+      {who:'caller', label:'민원인 · 정정 요청', step:4, stepKo:'정정 요청', text:'아니요, 버스정류장이 아니라 횡단보도 앞이에요.'},
+      {who:'sys', label:'시스템 · 재시작', step:1, stepKo:'재시작', loop:true, text:'확인해 주셔서 감사합니다. 정확한 접수를 위해 처음부터 다시 받겠습니다. 민원 내용을 다시 한 번 말씀해 주세요.'},
+      {who:'caller', label:'민원인 · 재발화', step:2, stepKo:'민원인 재발화', text:'봉천로 OO 횡단보도 앞이요. 도로에 구멍이 크게 파여서 방금 오토바이가 빠져 넘어질 뻔했어요.'},
+      {who:'sys', label:'시스템 · 정정 분류·요약 확인', step:3, stepKo:'정정 분류 확인', confirm:true, text:'다시 정리하겠습니다. <q>봉천로 OO 횡단보도 앞 도로 파손(포트홀), 야간 시인성 불량으로 이륜차 사고 우려</q> 건으로 접수하려고 합니다. 이번에는 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 이제 맞아요.'},
+    ],
+    keys:['도로 파손','포트홀','야간','이륜차 사고 우려'],
+    note:'사고 위험(이륜차 전도 직전)과 야간 시인성 불량이 겹쳐 <b>경계(LV.4)</b>. 매뉴얼 §35 기준 <b>급박한 상황</b>에 해당 → 담당자 연락 후 도로보수 기동반 임시조치 대상, 즉시 전화 호출.',
+    manualLabel:'도로함몰 시 대처 — 긴급조치', manualSrc:'매뉴얼 §35',
+    steps:['안전사고·추락 위험 등 급박 상황 여부 판단','급박 시: 담당자 연락 → 도로보수 기동반 임시조치','함몰 주변 안전표시 등 현장 안전조치','추후 연간단가 업체·원인자 통해 원상복구'],
+    actions:[{t:'도로관리과 즉시 전화 호출',k:'primary',i:'phone'},{t:'기동반 출동 요청',k:'ghost',i:'alert'},{t:'현장사진 요청',k:'ghost',i:'app'}],
+  },
+  /* ---- 쓰레기 ---- */
+  {
+    id:'C-0233', time:'22:31', pr:3, scen:'waste', scenLabel:'쓰레기 민원',
+    field:'환경 · 청소', dept:'청소행정과', status:'wait',
+    title:'생활쓰레기 무단투기·미수거, 악취',
+    addr:'신림동 OO길 OO 빌라 앞',
+    callerNo:'010-77XX-34XX',
+    deliver:'문자 · 메일 알림', deliverIcon:'msg',
+    summary:'골목 무단투기 쓰레기 더미 사흘째 미수거, 악취 발생',
+    transcript:[
+      {who:'sys', label:'시스템 · 자동 안내', step:1, stepKo:'자동 안내', text:GREET},
+      {who:'caller', label:'민원인', step:2, stepKo:'민원인 발화', text:'신림동 OO길 빌라 앞 골목에 쓰레기가 산더미처럼 쌓여 있어요. 종량제 봉투도 아닌 검은 봉지에 음식물까지 섞여서 냄새가 너무 심합니다. 사흘째 그대로인데 수거를 안 해 가요.'},
+      {who:'sys', label:'시스템 · 분류·요약 확인', step:3, stepKo:'분류·요약 확인', confirm:true, text:'말씀하신 내용을 정리하겠습니다. <q>신림동 OO길 빌라 앞 골목 생활쓰레기 무단투기 및 3일간 미수거, 악취 발생</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 맞습니다.'},
+      {who:'sys', label:'시스템 · 종료', step:5, stepKo:'기록 완료·종료', text:'민원 기록이 완료되었습니다. 담당 부서에 전달하여 다음 수거 일정에 반영되도록 하고, 처리 결과를 문자로 안내드리겠습니다. 감사합니다.'},
+    ],
+    confirmWrong:'말씀하신 내용을 정리하겠습니다. <q><span class="wr">신사동</span> OO길 빌라 앞 골목 생활쓰레기 무단투기 및 3일간 미수거, 악취 발생</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?',
+    disagree:[
+      {who:'caller', label:'민원인 · 정정 요청', step:4, stepKo:'정정 요청', text:'아니요, 신사동이 아니라 신림동이에요.'},
+      {who:'sys', label:'시스템 · 재시작', step:1, stepKo:'재시작', loop:true, text:'확인해 주셔서 감사합니다. 정확한 접수를 위해 처음부터 다시 받겠습니다. 민원 내용을 다시 한 번 말씀해 주세요.'},
+      {who:'caller', label:'민원인 · 재발화', step:2, stepKo:'민원인 재발화', text:'신림동 OO길 빌라 앞 골목이요. 검은 봉지에 음식물 섞인 쓰레기가 사흘째 그대로 쌓여 있어요.'},
+      {who:'sys', label:'시스템 · 정정 분류·요약 확인', step:3, stepKo:'정정 분류 확인', confirm:true, text:'다시 정리하겠습니다. <q>신림동 OO길 빌라 앞 골목 생활쓰레기 무단투기 및 3일간 미수거, 악취 발생</q> 건으로 접수하려고 합니다. 이번에는 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 맞습니다.'},
+    ],
+    keys:['무단투기','미수거','악취','생활쓰레기'],
+    note:'생활 불편 민원으로 즉시 출동보다 <b>담당자 알림·익일 수거 반영</b>이 적절. 환경·생활 부서 기준(주의 이상)에 따라 문자·메일로 전달. 매뉴얼 §22: 대행업체 근무시간 외에는 당직실 처리 또는 <b>다음날 담당자 전달</b>.',
+    manualLabel:'청소관련 민원처리 — 생활쓰레기', manualSrc:'매뉴얼 §22',
+    steps:['생활쓰레기 수거: 평일·토·휴일 00:00~09:00 대행업체','대행업체 근무시간 외 → 당직실 처리 또는 익일 담당자 전달','무단투기 건은 단속 담당에 병행 전달','처리 결과 민원인 회신'],
+    actions:[{t:'청소행정과 문자·메일 발송',k:'primary',i:'msg'},{t:'대행업체 콜센터 연결',k:'ghost',i:'phone'}],
+  },
+  /* ---- 불법주정차 ---- */
+  {
+    id:'C-0232', time:'23:05', pr:3, scen:'park', scenLabel:'불법 주정차',
+    field:'교통', dept:'교통지도과 교통상황실', status:'wait',
+    title:'소화전 앞 불법주차 — 상습 의심',
+    addr:'은천동 OO아파트 정문 앞',
+    callerNo:'010-58XX-20XX',
+    deliver:'문자 · 앱 즉시 알림', deliverIcon:'msg',
+    summary:'소화전 앞 차량 — 절대금지구역, 어제도 동일 차량',
+    transcript:[
+      {who:'sys', label:'시스템 · 자동 안내', step:1, stepKo:'자동 안내', text:GREET},
+      {who:'caller', label:'민원인', step:2, stepKo:'민원인 발화', text:'은천동 OO아파트 정문 옆 소화전 앞에 차가 계속 세워져 있어요. 어제도 같은 차가 밤새 서 있었어요. 불이라도 나면 소방차가 물을 못 쓸 것 같아서 너무 불안합니다.'},
+      {who:'sys', label:'시스템 · 분류·요약 확인', step:3, stepKo:'분류·요약 확인', confirm:true, text:'말씀하신 내용을 정리하겠습니다. <q>은천동 OO아파트 정문 소화전 앞 불법주차, 동일 차량 상습 의심</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 맞아요. 빨리 처리해 주세요.'},
+      {who:'sys', label:'시스템 · 종료', step:5, stepKo:'기록 완료·종료', text:'민원 기록이 완료되었습니다. 단속이 필요한 사안으로 분류되어 담당자에게 즉시 전달되며, 처리 결과를 문자로 안내드리겠습니다. 감사합니다.'},
+    ],
+    confirmWrong:'말씀하신 내용을 정리하겠습니다. <q>은천동 OO아파트 정문 앞 <span class="wr">도로변 일반 불법주차</span>, 동일 차량 상습 의심</q> 건으로 접수하려고 합니다. 내용이 맞으십니까?',
+    disagree:[
+      {who:'caller', label:'민원인 · 정정 요청', step:4, stepKo:'정정 요청', text:'아니요, 그냥 도로변이 아니라 소화전 바로 앞이에요. 불나면 큰일 나요.'},
+      {who:'sys', label:'시스템 · 재시작', step:1, stepKo:'재시작', loop:true, text:'확인해 주셔서 감사합니다. 정확한 접수를 위해 처음부터 다시 받겠습니다. 민원 내용을 다시 한 번 말씀해 주세요.'},
+      {who:'caller', label:'민원인 · 재발화', step:2, stepKo:'민원인 재발화', text:'은천동 OO아파트 정문 옆 소화전 앞에 차가 세워져 있다고요. 어제도 같은 차가 밤새 서 있었어요.'},
+      {who:'sys', label:'시스템 · 정정 분류·요약 확인', step:3, stepKo:'정정 분류 확인', confirm:true, text:'다시 정리하겠습니다. <q>은천동 OO아파트 정문 소화전 앞 불법주차, 동일 차량 상습 의심</q> 건으로 접수하려고 합니다. 이번에는 내용이 맞으십니까?'},
+      {who:'caller', label:'민원인 · 내용 확인', step:4, stepKo:'내용 확인', text:'네, 맞아요. 빨리 처리해 주세요.'},
+    ],
+    keys:['소화전','절대금지구역','상습','단속 요청'],
+    note:'소화전 등 소방용수시설 앞은 <b>주정차 절대금지구역 — 즉시 단속</b> 대상. 교통지도과 교통상황실이 24시간 3교대로 운영되어 야간에도 단속이 가능하므로, <b>문자·앱으로 즉시 전달</b>해 단속을 요청 (매뉴얼 §43 기준 처리부서).',
+    manualLabel:'불법주정차 민원 응대', manualSrc:'매뉴얼 §43',
+    steps:['불법주정차 민원은 교통지도과 교통상황실에서 처리 (24시간 3교대)','절대금지구역(보도·횡단보도·정류소·교차로·어린이보호구역·소화전) 즉시 단속','단속 민원 접수 후 3시간 이내 처리 원칙','오토바이 단속은 경찰청(☎182) 안내'],
+    actions:[{t:'교통상황실 문자·앱 발송',k:'primary',i:'msg'},{t:'견인 필요 시 추가 요청',k:'ghost',i:'alert'}],
+  },
+  /* ---- 침수 LV5 ---- */
+  {
+    id:'C-0230', time:'01:07', pr:5, scen:null,
+    field:'기반시설', dept:'도로관리과', status:'wait',
+    title:'도로 침수·차량 고립 신고',
+    addr:'호암로OO길 OO 일대',
+    callerNo:'010-31XX-66XX',
+    deliver:'즉시 전화 호출', deliverIcon:'phone',
+    summary:'침수된 도로에 차량이 빠져 인명 위험 — 심야 긴급',
+    transcript:[
+      {who:'sys', label:'시스템', text:GREET},
+      {who:'caller', label:'민원인', text:'호암로OO길에서 가게 하는 사람인데요, 가게 앞 도로가 다 잠겼어요. 지나가던 차도 빠져서 사람이 못 나오고 있어요. 빨리 좀 와주세요.'},
+      {who:'sys', label:'시스템 · 긴급 확인', text:'<q>호암로OO길 일대 도로 침수, 차량 고립·인명 위험</q> 긴급 건으로 즉시 접수합니다. 119에도 동시에 연결해 드리겠습니다. 현재 위치에서 안전한 곳으로 이동해 주세요.'},
+    ],
+    keys:['침수','차량 고립','인명 위험','심야'],
+    note:'<b>인명·안전 위험</b>과 심야 시간대가 겹쳐 최고 등급. 긴급 건은 확인 절차를 최소화하고 즉시 호출 — 안전·재난 부서 기준(경계 이상) → 즉시 전화 호출 + 119 연계.',
+    manualLabel:'도로함몰·침수 긴급조치 (중대 사항)', manualSrc:'매뉴얼 §35',
+    steps:['상황 발생 즉시 현장 확인','현장 안전조치 — 교통통제 / 안전표시','2차 사고 우려 시 긴급 되메우기','상황 카톡방 개설 후 도로관리과 보고'],
+    actions:[{t:'즉시 전화 호출',k:'primary',i:'phone'},{t:'상황 카톡방 개설',k:'ghost',i:'msg'},{t:'119 공동대응 요청',k:'danger',i:'alert'}],
+  },
+  /* ---- 기록 실패 ---- */
+  {
+    id:'C-0234', time:'00:12', pr:2, scen:null, fail:true,
+    field:'미분류', dept:'분류 보류', status:'fail',
+    title:'음성 인식 불충분 — 민원 기록 실패',
+    addr:'위치 미확인',
+    callerNo:'010-94XX-55XX (발신번호 확보)',
+    deliver:'당직자 재전화 필요', deliverIcon:'phone',
+    summary:'잡음·통화 중단으로 기록 실패 — 콜백 대기',
+    transcript:[
+      {who:'sys', label:'시스템', text:GREET},
+      {who:'caller', label:'민원인', text:'(잡음) ……물이…… 아니 그게 아니라…… (통화 중단)'},
+      {who:'flag', text:'발화 인식률 낮음 · 통화 중단 — 요약 확인 단계 진입 실패. 민원 기록 미완료. 발신번호 확보됨 → 당직자 재전화 필요.'},
+    ],
+    keys:['인식률 낮음','통화 중단','발신번호 확보'],
+    note:'요약 확인(③)에 도달하지 못해 <b>기록이 확정되지 않은 건</b>. 시스템은 실패 건을 숨기지 않고 별도 알림으로 당직자에게 전달 — 당직자가 재전화로 내용을 확인·보정한 뒤 부서에 전달합니다.',
+    manualLabel:'기록 실패 건 처리 절차', manualSrc:'시스템 운영 규칙',
+    steps:['실패 건 즉시 당직자 알림 (웹·앱·문자)','확보된 발신번호로 당직자 재전화','통화로 민원 내용 확인 → 기록 보정','보정된 내용으로 담당부서 전달'],
+    actions:[{t:'민원인에게 재전화',k:'danger',i:'phone'},{t:'기록 보정 입력',k:'ghost',i:'app'}],
+  },
+  /* ---- 단순문의 자동응대 ---- */
+  {
+    id:'C-0229', time:'21:15', pr:1, scen:null, autoHandled:true,
+    field:'행정', dept:'민원여권과', status:'auto',
+    title:'무인민원발급기 이용 문의',
+    addr:'-',
+    callerNo:'010-40XX-18XX',
+    deliver:'AI 자동 응대 · 앱 기록', deliverIcon:'app',
+    summary:'발급기 운영시간·발급 서류 단순 문의',
+    transcript:[
+      {who:'caller', label:'민원인', text:'서울대입구역 무인발급기 지금도 쓸 수 있나요? 등본 떼려고요.'},
+      {who:'sys', label:'시스템', text:'네, 서울대입구역 7번 출구 발급기는 24시간 운영되며 주민등록등본·가족관계증명서 발급이 가능합니다. 더 도와드릴 내용이 있을까요?'},
+    ],
+    keys:['단순 안내','정보 문의'],
+    note:'담당자 호출이 <b>불필요한 단순 문의</b>. 시스템이 매뉴얼 정보로 직접 안내하고, 당직자에게는 기록만 남깁니다.',
+    manualLabel:'무인민원발급 안내 정보', manualSrc:'매뉴얼 §15',
+    steps:['서울대입구역 7번 출구 — 24시간 연중무휴','신림역 3번 출구 — 05:30~23:30','봉천역 5번 출구 — 05:30~23:30','구청 민원실 — 24시간 연중무휴'],
+    actions:[{t:'AI 자동 응대 완료',k:'done',i:'check'}],
+  },
+];
+
+const STATUS = {
+  wait:{ko:'확인 대기', cls:'st-wait'},
+  sent:{ko:'전달 완료', cls:'st-sent'},
+  fail:{ko:'기록 실패', cls:'st-fail'},
+  callback:{ko:'보정 완료', cls:'st-wait'},
+  auto:{ko:'자동 응대', cls:'st-auto'},
+};
+
+const sevPr = CASES.filter(c=>c.pr>=4).length;
+let view='inbox', curId=null, curScen='road', curBranch='ok', curWeb='C-0231', device='app';
+
+/* ================= 03 SCENARIO PLAYER ================= */
+const SCEN_COLORS = {road:'var(--p4)', waste:'var(--p3)', park:'var(--p3)'};
+function renderScenTabs(){
+  const tabs = CASES.filter(c=>c.scen);
+  document.getElementById('scenTabs').innerHTML = tabs.map(c=>
+    `<button class="scen-tab ${c.scen===curScen?'on':''}" style="--tc:${PR[c.pr].dac}" onclick="setScen('${c.scen}')">
+      <span class="sd"></span>${c.scenLabel}<span style="font-family:var(--mono);font-size:10.5px;opacity:.6">${c.manualSrc.replace('매뉴얼 ','')}</span>
+    </button>`).join('');
+}
+function setScen(s){ curScen=s; curBranch='ok'; renderScenTabs(); renderScenario(); }
+function setBranch(b){
+  curBranch=b;
+  document.getElementById('br-ok').classList.toggle('on',b==='ok');
+  document.getElementById('br-no').classList.toggle('on',b==='no');
+  renderDlg();
+}
+function scenCase(){ return CASES.find(c=>c.scen===curScen); }
+function renderScenario(){
+  const c = scenCase(), p = PR[c.pr];
+  document.getElementById('scHead').innerHTML =
+    `<span class="pbadge" style="background:${p.dac}">${p.ko} · ${p.lv}</span>
+     <h3>${c.title}</h3>
+     <span class="meta">${c.id} · ${c.time} · ${c.addr}</span>`;
+  document.getElementById('br-ok').classList.add('on');
+  document.getElementById('br-no').classList.remove('on');
+  renderDlg();
+  renderSide();
+}
+function dlgRow(t){
+  if(t.loop){
+    return `<div class="dl-loop"><svg viewBox="0 0 24 24">${ICON.redo}</svg><span><b>① 자동 안내부터 재시작</b> — ${t.text}</span></div>`;
+  }
+  const right = t.who==='caller';
+  const wrongTag = t.wrong ? `<div class="wrongtag">✕ 민원인 확인 결과 — 적색 표시 부분 오인식 → 처음부터 재접수</div>` : '';
+  return `<div class="dl-row ${right?'right':''}">
+    <div class="dl-step"><span class="sn">${t.step}</span><small>${t.stepKo}</small></div>
+    <div class="dl-bub ${t.confirm?'confirmq':''} ${t.wrong?'wrongb':''}"><span class="who">${t.label}</span>${t.text}${wrongTag}</div>
+  </div>`;
+}
+function renderDlg(){
+  const c = scenCase();
+  let rows;
+  if(curBranch==='ok'){
+    rows = c.transcript.map(dlgRow).join('') +
+      `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 기록 확정 — 당직자에게 전달 (FLOW B)</div>`;
+  }else{
+    rows = c.transcript.slice(0,2).map(dlgRow).join('')
+      + dlgRow(Object.assign({}, c.transcript[2], {wrong:true, text:c.confirmWrong||c.transcript[2].text}))
+      + c.disagree.map(dlgRow).join('')
+      + `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 정정 분류로 기록 확정 — 당직자에게 전달 (FLOW B)</div>`;
+  }
+  document.getElementById('dlgBody').innerHTML = rows;
+}
+function renderSide(){
+  const c = scenCase(), p = PR[c.pr];
+  document.getElementById('scenSide').innerHTML = `
+    <div class="side-card">
+      <div class="sh">AI 분류 근거</div>
+      <div class="skeys">${c.keys.map(k=>`<span>${k}</span>`).join('')}</div>
+      <div class="snote">${c.note}</div>
+      <div class="sroute">
+        <div class="sr"><div class="rl">배정 부서</div><div class="rvv">${c.dept}</div></div>
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="sr" style="text-align:right"><div class="rl">전달 방식</div><div class="rvv" style="color:${p.dac};font-size:12.5px">${c.deliver}</div></div>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="sh">매뉴얼 자동 표출 — ${c.manualLabel}</div>
+      <div class="smanual">
+        ${c.steps.map((s,i)=>`<div class="ms"><span class="mn">${i+1}</span><span>${s}</span></div>`).join('')}
+        <div class="msrc">출처: ${c.manualSrc}</div>
+      </div>
+    </div>`;
+}
+
+/* ================= 04 DEVICE TOGGLE ================= */
+function setDevice(d){
+  device=d;
+  document.getElementById('dev-app').classList.toggle('on',d==='app');
+  document.getElementById('dev-web').classList.toggle('on',d==='web');
+  document.getElementById('appStage').classList.toggle('on',d==='app');
+  document.getElementById('lockBtnWrap').style.display = d==='app'?'block':'none';
+  document.getElementById('webStage').classList.toggle('on',d==='web');
+  if(d==='web') renderWeb();
+}
+
+/* ================= APP (phone) ================= */
+function renderPicker(){
+  const box=document.querySelector('.picker');
+  box.querySelectorAll('.pk').forEach(b=>b.remove());
+  CASES.forEach(c=>{
+    const p=PR[c.pr];
+    const b=document.createElement('button');
+    b.className='pk'; b.id='pk-'+c.id; b.style.setProperty('--ac',p.ac);
+    b.onclick=()=>pick(c.id);
+    b.innerHTML=`<span class="pk-dot"></span>
+      <span class="pk-t"><b>${c.title}</b><span>${c.id} · ${c.time} · ${c.dept}</span></span>
+      <span class="pk-pr">${c.fail?'실패':p.ko}</span>`;
+    box.appendChild(b);
+  });
+}
+function inboxHtml(){
+  const sorted=[...CASES].sort((a,b)=> b.pr-a.pr || (a.time<b.time?1:-1));
+  return `<div class="inbox-head">
+      <span class="t">2026.03.14 · 야간 접수 ${CASES.length}건</span>
+      <span class="sort"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" style="width:13px;height:13px"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 6v14"/></svg> 우선순위순</span>
+    </div>` +
+    sorted.map(c=>{
+      const p=PR[c.pr]; const st=STATUS[c.status];
+      return `<div class="ni ${c.autoHandled?'done':''}" style="--ac:${c.fail?'var(--a-fail)':p.ac}" onclick="openDetail('${c.id}')">
+        <div class="stripe"></div>
+        <div class="ni-main">
+          <div class="ni-top">
+            <span class="ni-pr">${c.fail?'실패':p.ko}</span>
+            <span class="st-chip ${st.cls}">${st.ko}</span>
+            <span class="ni-time">${c.time}</span>
+          </div>
+          <h4>${c.title}</h4>
+          <p>${c.field} · ${c.dept} — ${c.deliver}</p>
+        </div>
+        <div class="chev"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>`;
+    }).join('');
+}
+function detailHtml(c){
+  const p=PR[c.pr];
+  const ac = c.fail?'var(--a-fail)':p.ac;
+  const tr=c.transcript.map(t=>{
+    if(t.who==='flag') return `<div class="bub flag"><svg viewBox="0 0 24 24">${ICON.alert}</svg>${t.text}</div>`;
+    return `<div class="bub ${t.who}"><span class="who">${t.label}</span>${t.text}</div>`;
+  }).join('');
+  const keys=c.keys.map(k=>`<span>${k}</span>`).join('');
+  const steps=c.steps.map((s,i)=>`<div class="mstep"><span class="mn">${i+1}</span><span>${s}</span></div>`).join('');
+  const acts=c.actions.map(a=>`<button class="act ${a.k}"><svg viewBox="0 0 24 24">${ICON[a.i]}</svg>${a.t}</button>`).join('');
+  return `<div class="detail">
+    <div class="d-hero" style="--ac:${ac}">
+      <span class="pr-big ${c.pr>=5?'sev':''}" style="background:${ac}">${c.fail?'기록 실패':p.ko+' · '+p.lv}</span>
+      <h3>${c.title}</h3>
+      <div class="d-meta"><span>${c.id}</span><span>·</span><span>접수 ${c.time}</span>${c.addr!=='-'?`<span>·</span><span><b>📍 ${c.addr}</b></span>`:''}</div>
+    </div>
+    <div class="route" style="--ac:${ac}">
+      <div class="rdept"><div class="rl">분야 · 배정 부서</div><div class="rvx">${c.field} · ${c.dept}</div></div>
+      <div class="rarrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="rdeliv"><div class="rl">전달 방식</div><div class="rvx"><svg viewBox="0 0 24 24">${ICON[c.deliverIcon]}</svg> ${c.deliver}</div></div>
+    </div>
+    <div class="block">
+      <div class="bh">통화 실시간 전사</div>
+      <div class="tr-row">${tr}</div>
+    </div>
+    <div class="block">
+      <div class="bh">AI 우선순위 판별 근거</div>
+      <div class="ai-card" style="border-left-color:${ac}">
+        <div class="ai-eng"><span class="pd"></span> 통화 내용 자동 분석</div>
+        <div class="ai-keys" style="--ac:${ac}">${keys}</div>
+        <div class="ai-note">${c.note}</div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="bh">매뉴얼 자동 표출</div>
+      <div class="manual-card">
+        <div class="mh"><svg viewBox="0 0 24 24">${ICON.book}</svg> ${c.manualLabel}<span class="src">${c.manualSrc}</span></div>
+        ${steps}
+      </div>
+    </div>
+    ${c.care?`<div class="carenote">${c.care}</div>`:''}
+    <div class="actions" style="--ac:${ac}">${acts}</div>
+  </div>`;
+}
+function setTab(t){
+  document.getElementById('tab-inbox').classList.toggle('on',t==='inbox');
+  document.getElementById('tab-stat').classList.toggle('on',t==='stat');
+}
+function showInbox(){
+  view='inbox'; curId=null;
+  document.getElementById('view').innerHTML=inboxHtml();
+  document.getElementById('backBtn').style.display='none';
+  document.getElementById('liveBadge').style.display='flex';
+  document.getElementById('appTitle').style.display='flex';
+  setTab('inbox');
+  document.querySelectorAll('.pk').forEach(b=>b.classList.remove('on'));
+}
+function openDetail(id){
+  const c=CASES.find(x=>x.id===id); if(!c)return;
+  view='detail'; curId=id;
+  const vw=document.getElementById('view');
+  vw.innerHTML=detailHtml(c); vw.scrollTop=0;
+  document.getElementById('backBtn').style.display='flex';
+  document.getElementById('liveBadge').style.display='none';
+  document.getElementById('appTitle').style.display='none';
+  document.querySelectorAll('.pk').forEach(b=>b.classList.toggle('on', b.id==='pk-'+id));
+}
+function showStat(){
+  view='stat'; curId=null;
+  setTab('stat');
+  document.getElementById('backBtn').style.display='none';
+  document.getElementById('liveBadge').style.display='flex';
+  document.getElementById('appTitle').style.display='flex';
+  const dist=[5,4,3,2,1].map(lv=>{
+    const n=CASES.filter(c=>c.pr===lv).length;
+    const p=PR[lv];
+    return `<div class="dbar"><span class="dname" style="color:${p.ac}">${p.ko}</span>
+      <div class="dtrack"><div class="dfill" style="width:${n/CASES.length*100}%;background:${p.ac}"></div></div>
+      <span class="dv">${n}</span></div>`;
+  }).join('');
+  document.getElementById('view').innerHTML=`<div class="stat">
+    <div class="stat-h">2026.03.14 야간 (21:00 ~ 07:00) 자동 집계</div>
+    <div class="stat-grid">
+      <div class="stat-c"><div class="v">${CASES.length}</div><div class="l">총 접수 민원</div></div>
+      <div class="stat-c"><div class="v" style="color:var(--a-p5)">${sevPr}</div><div class="l">즉시 전화 호출 (경계↑)</div></div>
+      <div class="stat-c hl"><div class="v">1</div><div class="l">AI 자동 응대 처리</div></div>
+      <div class="stat-c"><div class="v" style="color:var(--a-fail)">1</div><div class="l">기록 실패 → 콜백 처리</div></div>
+    </div>
+    <div class="dist">
+      <div class="dl">우선순위 분포</div>
+      ${dist}
+    </div>
+    <div class="carenote" style="margin:14px 0 0">단순 문의 <b>1건</b>은 자동 처리, 기록 실패 <b>1건</b>은 재전화 보정 후 전달되었으며, 모든 통화는 검색 가능한 기록으로 남았습니다.</div>
+  </div>`;
+  document.querySelectorAll('.pk').forEach(b=>b.classList.remove('on'));
+}
+function pick(id){
+  document.querySelector('.app-sec').scrollIntoView({behavior:'smooth',block:'start'});
+  if(device!=='app') setDevice('app');
+  openDetail(id);
+}
+function openLock(){ document.getElementById('lock').classList.add('show'); }
+function closeLock(){ document.getElementById('lock').classList.remove('show'); openDetail('C-0230'); }
+
+/* ================= WEB DASHBOARD ================= */
+function webTimeline(c){
+  const mk=(state,title,sub)=>`<div class="tl-step ${state}"><div class="td"></div><div class="tt"><b>${title}</b><span>${sub}</span></div></div>`;
+  if(c.status==='auto'){
+    return mk('done','민원 접수', c.time+' 자동 응대')+mk('done','AI 직접 안내·종료','담당자 호출 없음')+mk('done','기록 보관','검색 가능 · 익일 보고 포함');
+  }
+  if(c.status==='fail'){
+    return mk('done','민원 접수', c.time)+mk('fail','AI 기록','요약 확인 실패 — 통화 중단')+mk('now','당직자 재전화','발신번호 '+c.callerNo)+mk('dim','내용 보정 → 부서 전달','보정 후 전달 가능');
+  }
+  if(c.status==='callback'){
+    return mk('done','민원 접수', c.time)+mk('fail','AI 기록','요약 확인 실패 — 통화 중단')+mk('done','당직자 재전화·확인','통화로 내용 보정 완료')+mk('now','부서 전달 대기','보정 내용 전달 확인 필요');
+  }
+  if(c.status==='sent'){
+    return mk('done','민원 접수', c.time)+mk('done','AI 기록 확정','민원인 확인 완료')+mk('done','당직자 확인',c.sentAt||'확인 완료')+mk('done','담당부서 전달',c.dept+' 메일·문자 발송');
+  }
+  /* wait */
+  return mk('done','민원 접수', c.time)+mk('done','AI 기록 확정','민원인 확인 완료')+mk('now','당직자 확인 대기','웹·앱·문자·메일 발송됨')+mk('dim','담당부서 전달','확인 시 자동 발송');
+}
+function webActions(c){
+  if(c.status==='wait'){
+    return `<button class="wbtn primary" style="--ac:${PR[c.pr].ac}" onclick="confirmSend('${c.id}')"><svg viewBox="0 0 24 24">${ICON.send}</svg> 담당부서 전달 확인 — ${c.dept}</button>
+      <div class="wnote">확인 시 <b>${c.dept}</b> 담당자 메일·문자로 즉시 전달되고, 전달 이력이 기록됩니다.</div>`;
+  }
+  if(c.status==='sent'){
+    return `<button class="wbtn done"><svg viewBox="0 0 24 24">${ICON.check}</svg> 전달 완료 — ${c.dept}</button>
+      <div class="wnote">전달 이력이 기록되었습니다. 처리 결과 입력 시 <b>민원인에게 문자 회신</b>이 자동 발송됩니다.</div>`;
+  }
+  if(c.status==='fail'){
+    return `<div class="failbox"><div class="fb-t"><svg viewBox="0 0 24 24">${ICON.alert}</svg> 민원 기록 실패 — 당직자 확인 필요</div>
+      <p>요약 확인 단계에 도달하지 못했습니다. 확보된 발신번호로 직접 전화하여 내용을 확인해 주세요.</p></div>
+      <button class="wbtn warn" onclick="doCallback('${c.id}')"><svg viewBox="0 0 24 24">${ICON.phone}</svg> 민원인에게 재전화 (${c.callerNo.split(' ')[0]})</button>`;
+  }
+  if(c.status==='callback'){
+    return `<div class="wnote"><b>재전화 완료</b> — 통화로 확인한 내용으로 기록이 보정되었습니다: "반지하 주택 <b>침수 우려</b>, 배수 요청 (신사동 OO길)" → 치수과 배정.</div>
+      <button class="wbtn primary" style="--ac:var(--a-fail)" onclick="confirmSend('${c.id}')"><svg viewBox="0 0 24 24">${ICON.send}</svg> 보정 내용 부서 전달 — 치수과</button>`;
+  }
+  return `<button class="wbtn done"><svg viewBox="0 0 24 24">${ICON.check}</svg> AI 자동 응대 완료 — 기록만 보관</button>`;
+}
+function confirmSend(id){
+  const c=CASES.find(x=>x.id===id);
+  if(c.status==='callback'){ c.dept='치수과'; c.title='반지하 침수 우려 (재전화 보정)'; c.field='치수·배수'; }
+  c.status='sent'; c.sentAt='방금 · 당직사령 확인';
+  renderWeb();
+}
+function doCallback(id){
+  const c=CASES.find(x=>x.id===id);
+  c.status='callback';
+  renderWeb();
+}
+function renderWebList(){
+  const head=`<div class="bl-head"><b>야간 접수 민원</b><span>2026.03.14</span></div>`;
+  const items=[...CASES].sort((a,b)=>b.pr-a.pr).map(c=>{
+    const p=PR[c.pr]; const st=STATUS[c.status];
+    const ac=c.fail?'var(--a-fail)':p.ac;
+    return `<div class="wi ${c.id===curWeb?'on':''}" style="--ac:${ac}" onclick="selWeb('${c.id}')">
+      <span class="stripe"></span>
+      <div class="wm">
+        <div class="wt"><span class="wp" style="background:${ac}">${c.fail?({fail:'실패',callback:'보정',sent:'보정 전달'}[c.status]||p.ko):p.ko}</span><span class="wtime">${c.time}</span></div>
+        <h5>${c.title}</h5>
+        <div class="wsub"><span class="st-chip ${st.cls}">${st.ko}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('webList').innerHTML=head+items;
+}
+function renderWebDetail(){
+  const c=CASES.find(x=>x.id===curWeb); const p=PR[c.pr];
+  const ac=c.fail?'var(--a-fail)':p.ac;
+  const tr=c.transcript.map(t=>{
+    if(t.who==='flag') return `<div class="bub flag"><svg viewBox="0 0 24 24">${ICON.alert}</svg>${t.text}</div>`;
+    return `<div class="bub ${t.who}"><span class="who">${t.label}</span>${t.text}</div>`;
+  }).join('');
+  document.getElementById('webDetail').innerHTML=`
+    <div class="bd-top" style="--ac:${ac}">
+      <span class="pr-big" style="background:${ac}">${c.fail?({fail:'기록 실패',callback:'재전화 보정 완료',sent:'보정 후 전달'}[c.status]||p.ko):p.ko+' · '+p.lv}</span>
+      <span class="st-chip ${STATUS[c.status].cls}" style="align-self:center">${STATUS[c.status].ko}</span>
+      <h3>${c.title}</h3>
+      <div class="d-meta"><span>${c.id}</span><span>·</span><span>접수 ${c.time}</span><span>·</span><span><b>📍 ${c.addr}</b></span><span>·</span><span>발신 ${c.callerNo}</span></div>
+    </div>
+    <div class="bd-cols">
+      <div class="bd-col">
+        <div class="bd-block">
+          <div class="bh">통화 전사 · 요약 확인 이력</div>
+          <div class="tr-row">${tr}</div>
+        </div>
+        <div class="bd-block">
+          <div class="bh">AI 분류 근거</div>
+          <div class="ai-card" style="border-left-color:${ac}">
+            <div class="ai-keys" style="--ac:${ac}">${c.keys.map(k=>`<span>${k}</span>`).join('')}</div>
+            <div class="ai-note">${c.note}</div>
+          </div>
+        </div>
+      </div>
+      <div class="bd-col">
+        <div class="bd-block">
+          <div class="bh">처리 상태</div>
+          <div class="tl">${webTimeline(c)}</div>
+        </div>
+        <div class="bd-block">
+          <div class="bh">당직자 액션</div>
+          <div class="wact">${webActions(c)}</div>
+        </div>
+        <div class="bd-block">
+          <div class="bh">매뉴얼 — ${c.manualSrc}</div>
+          <div class="manual-card">
+            <div class="mh"><svg viewBox="0 0 24 24">${ICON.book}</svg> ${c.manualLabel}</div>
+            ${c.steps.map((s,i)=>`<div class="mstep"><span class="mn">${i+1}</span><span>${s}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function selWeb(id){ curWeb=id; renderWeb(); }
+function renderWeb(){ renderWebList(); renderWebDetail(); }
+
+/* ================= INIT ================= */
+renderScenTabs();
+renderScenario();
+renderPicker();
+showInbox();
+document.getElementById('inboxBadge').textContent=sevPr;
+</script>
+</body>
+</html>
