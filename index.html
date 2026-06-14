@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>관악구청 당직 민원응대 시스템</title>
+<title>관악구청 당직 민원응대 시스템 — 개편안</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +89,14 @@ body::before{
 
 /* ---------- process (call flow + after flow) ---------- */
 .flow{background:var(--paper-2);border:1px solid var(--line);border-radius:20px;padding:30px;overflow:hidden;margin-bottom:18px}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.rd-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;border-top:4px solid var(--line-2)}
+.rd-card.rd1{border-top-color:var(--p2)} .rd-card.rd2{border-top-color:var(--p3)} .rd-card.rd3{border-top-color:var(--brand)}
+.rd-card .rd-tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--ink-3)}
+.rd-card h3{font-size:18px;letter-spacing:-.02em;margin:10px 0 9px}
+.rd-card p{font-size:13.5px;color:var(--ink-2);line-height:1.55;margin-bottom:14px}
+.rd-card .rd-feat{font-size:12px;font-weight:700;color:var(--brand-deep);background:var(--brand-soft);border:1px solid #bfe0d1;border-radius:8px;padding:7px 11px;display:inline-block}
+@media(max-width:880px){.road{grid-template-columns:1fr}}
 .flow-title{display:flex;align-items:center;gap:10px;margin-bottom:22px}
 .flow-title .fn{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--brand);padding:3px 9px;border-radius:6px}
 .flow-title h3{font-size:17px;letter-spacing:-.02em}
@@ -537,14 +545,14 @@ body::before{
 <!-- HERO -->
 <header class="hero">
   <div class="wrap">
-    <span class="kicker rv"><span class="dot"></span> 야간·휴일 민원 응대 자동화</span>
-    <h1 class="rv" style="animation-delay:.05s">야간·휴일 민원을<br><b>접수·확인·전달</b>까지<br>자동으로 처리합니다.</h1>
-    <p class="lead rv" style="animation-delay:.12s">근무 외 시간 민원 전화를 AI가 직접 받아 안내하고, 발화 내용을 분류·요약해 민원인에게 <b>직접 확인</b>받은 뒤 기록합니다. 당직자는 웹·앱·문자·메일로 받아 확인 버튼 하나로 담당 부서에 전달합니다.</p>
+    <span class="kicker rv"><span class="dot"></span> 당직 민원 접수·분류·전달 자동화</span>
+    <h1 class="rv" style="animation-delay:.05s">민원 접수·분류·전달을<br><b>단계적으로</b><br>자동화합니다.</h1>
+    <p class="lead rv" style="animation-delay:.12s">근무 외 시간에 접수되는 민원 음성을 전사하고, 분야·위험도를 분류해 요약한 뒤 담당자에게 전달합니다. 기술적 위험을 줄이기 위해 양방향 실시간 대화 대신, 검증 가능한 범위부터 <b>단계적으로</b> 도입합니다.</p>
     <div class="tech-row rv" style="animation-delay:.18s">
-      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg> 음성 안내·발화 전사</span>
-      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> 요약 후 민원인 확인</span>
-      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg> 5단계 우선순위 분류</span>
-      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> 웹·앱·문자·메일 전달</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg> 음성 전사·분류·요약</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> 담당자에게 자동 전달</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> 자체 구축·내부망</span>
+      <span class="chip"><svg viewBox="0 0 24 24" stroke="#0e7a5b" fill="none" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg> 3단계 단계적 도입</span>
     </div>
   </div>
 </header>
@@ -582,91 +590,130 @@ body::before{
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-no">02</span>
-      <h2>전체 처리 흐름</h2>
-      <p>통화 단계(민원인 관점)와 접수 이후(당직자 관점)의 두 흐름으로 작동합니다. 민원인이 내용을 확인하지 않으면 기록이 확정되지 않고, 당직자의 확인 없이는 부서로 전달되지 않습니다.</p>
+      <h2>단계적 도입 전략</h2>
+      <p>민원인과 AI의 실시간 양방향 음성 대화는 응답 지연, 인식 오류, 생성 단계의 환각(hallucination) 위험과 높은 컴퓨팅 비용을 동반합니다. 본 제안은 이러한 위험을 통제하기 위해, 검증된 범위(전사·분류·요약)부터 시작해 단계적으로 상호작용을 도입합니다.</p>
     </div>
 
-    <!-- Flow A : call -->
+    <div class="road">
+      <div class="rd-card rd1 rv">
+        <span class="rd-tag">1단계 · 7월 데모</span>
+        <h3>전사 + 분류·요약</h3>
+        <p>마이크로 들어오는 민원 음성을 실시간 전사하고, 분야·위험도를 분류해 요약합니다. 음성인식·분류·요약 파이프라인의 정확도를 먼저 검증하는 단계입니다.</p>
+        <span class="rd-feat">민원인-AI 상호작용 없음 · 전사 정확도 검증</span>
+      </div>
+      <div class="rd-card rd2 rv" style="animation-delay:.08s">
+        <span class="rd-tag">2단계 · 시범사업</span>
+        <h3>녹음 기반 접수 + 담당자 전달</h3>
+        <p>안내음(삐 소리) 뒤 민원인의 음성을 녹음하고, 이를 분류·요약해 담당자에게 전달합니다. 동시 다수 세션을 지원해 실제 야간 민원량을 처리합니다.</p>
+        <span class="rd-feat">동시 세션 지원 · 실제 운영 검증</span>
+      </div>
+      <div class="rd-card rd3 rv" style="animation-delay:.16s">
+        <span class="rd-tag">3단계 · 본사업(최종)</span>
+        <h3>번호 입력(DTMF) 상호작용</h3>
+        <p>자동 분류 결과를 안내하고, 민원인이 전화 버튼으로 확인하는 방식입니다(맞으면 1번, 틀리면 2번). 음성 키오스크처럼 오인식·환각 위험 없이 민원인이 직접 검증합니다.</p>
+        <span class="rd-feat">번호로 확인만 · 생성 모델 의존 최소화</span>
+      </div>
+    </div>
+
+    <div class="callout rv" style="margin-bottom:18px">
+      <span class="src">설계 원칙</span>
+      <h3>작은 모델로 처리하고, 확인은 번호로 받습니다.</h3>
+      <p>분류·요약은 작은 모델로 처리하고, 민원인 확인은 자유발화 해석이 아닌 번호 입력으로 받아 환각·오인식 위험을 구조적으로 차단합니다. 큰 생성 모델이 필요하지 않아 시범 단계부터 동시 세션을 넉넉히 확보할 수 있습니다.</p>
+    </div>
+
+    <!-- 1단계 -->
     <div class="flow rv">
-      <div class="flow-title"><span class="fn">FLOW A</span><h3>통화 단계 — 민원인 관점</h3><small>· 민원인이 내용을 확인해야 기록이 확정됩니다</small></div>
+      <div class="flow-title"><span class="fn">1단계</span><h3>전사 + 분류·요약 (데모)</h3><small>· 상호작용 없이 인식 정확도 검증</small></div>
       <div class="flow-track">
         <div class="fstep">
           <div class="ico"><span class="num">1</span><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg></div>
-          <h4>자동 음성 안내</h4><small>"당직 시간 자동접수<br>시스템입니다" 고지</small>
+          <h4>음성 입력</h4><small>마이크로 민원 음성 수신</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep">
           <div class="ico"><span class="num">2</span><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg></div>
-          <h4>민원인 발화</h4><small>자유 발화 (3문장 내외)<br>실시간 전사</small>
+          <h4>실시간 전사</h4><small>음성을 텍스트로 변환(ASR)</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep core">
           <div class="ico"><span class="num">3</span><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg></div>
-          <h4>분류·요약 확인</h4><small>기록할 요약을 읽어주고<br>"내용이 맞으십니까?"</small>
+          <h4>분야·위험도 분류</h4><small>전사 텍스트를 자동 분류</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep">
           <div class="ico"><span class="num">4</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <h4>기록 완료·종료</h4><small>"담당자에게 전달해<br>처리 후 안내드리겠습니다"</small>
-        </div>
-      </div>
-      <div class="fork">
-        <div class="fork-card ok">
-          <span class="fk">요약이 맞은 경우</span>
-          <div class="ft"><b>민원 기록 확정 → 통화 종료</b>
-            <span>"민원 기록이 완료되었습니다. 담당자에게 연락을 전달하겠습니다 / 곧 처리하여 알려드리겠습니다"로 종료합니다.</span></div>
-        </div>
-        <div class="fork-card re">
-          <span class="fk">요약이 틀린 경우</span>
-          <div class="ft"><b>처음부터 다시 접수</b>
-            <span>요약이 사실과 다르면 기록하지 않고, ① 자동 안내 단계로 돌아가 민원 내용을 다시 받습니다.</span>
-            <span class="loopline"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> ①번 단계로 재시작</span></div>
+          <h4>요약 생성</h4><small>핵심 내용을 요약해 표시</small>
         </div>
       </div>
     </div>
 
-    <!-- Flow B : after -->
-    <div class="flow rv" style="animation-delay:.08s">
-      <div class="flow-title"><span class="fn">FLOW B</span><h3>접수 이후 — 당직자 관점</h3><small>· 확인 버튼 하나로 부서에 전달됩니다</small></div>
+    <!-- 2단계 -->
+    <div class="flow rv" style="animation-delay:.06s">
+      <div class="flow-title"><span class="fn">2단계</span><h3>녹음 기반 접수 → 담당자 전달 (시범)</h3><small>· 동시 세션 지원</small></div>
       <div class="flow-track">
         <div class="fstep">
-          <div class="ico"><span class="num">5</span><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg></div>
-          <h4>민원 기록 생성</h4><small>전사·요약·분류·우선순위<br>매뉴얼 절차 자동 첨부</small>
+          <div class="ico"><span class="num">1</span><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg></div>
+          <h4>안내음 후 녹음</h4><small>삐 소리 뒤 민원 음성 녹음</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep core">
-          <div class="ico"><span class="num">6</span><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
-          <h4>당직자 수신·확인</h4><small>웹 · 앱 · 문자 · 메일<br>4개 채널 동시 전달</small>
+          <div class="ico"><span class="num">2</span><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 12h16v4H4zM4 20h10"/></svg></div>
+          <h4>전사·분류·요약</h4><small>녹음을 텍스트화 후 분류·요약</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep">
-          <div class="ico"><span class="num">7</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <h4>전달 확인 (confirm)</h4><small>내용 검토 후<br>[담당부서 전달] 버튼</small>
+          <div class="ico"><span class="num">3</span><svg viewBox="0 0 24 24"><path d="M3 3l18 9-18 9 4-9-4-9z"/></svg></div>
+          <h4>담당자 전달</h4><small>요약·분류·녹음을 담당자에게 전달</small>
         </div>
         <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <div class="fstep">
-          <div class="ico"><span class="num">8</span><svg viewBox="0 0 24 24"><path d="M3 3l18 9-18 9 4-9-4-9z"/></svg></div>
-          <h4>담당부서 전달</h4><small>부서 담당자 메일·문자<br>처리 결과 민원인 회신</small>
+          <div class="ico"><span class="num">4</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>당직자 확인</h4><small>내용 확인 후 담당 부서로 처리</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3단계 -->
+    <div class="flow rv" style="animation-delay:.12s">
+      <div class="flow-title"><span class="fn">3단계</span><h3>번호 입력(DTMF) 상호작용 (본사업)</h3><small>· 민원인이 직접 확인</small></div>
+      <div class="flow-track">
+        <div class="fstep">
+          <div class="ico"><span class="num">1</span><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg></div>
+          <h4>음성 접수·자동 분류</h4><small>민원 음성을 분류·요약</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">2</span><svg viewBox="0 0 24 24"><path d="M3 5h18M3 12h18M3 19h18"/></svg></div>
+          <h4>분류 결과 안내</h4><small>"○○ 민원으로 접수합니다"</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep core">
+          <div class="ico"><span class="num">3</span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+          <h4>번호로 확인</h4><small>맞으면 1번 · 틀리면 2번</small>
+        </div>
+        <div class="farrow"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="fstep">
+          <div class="ico"><span class="num">4</span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>확정·전달</h4><small>확인 시 기록 확정·부서 전달</small>
         </div>
       </div>
       <div class="fork">
         <div class="fork-card ok">
-          <span class="fk">기록 정상</span>
-          <div class="ft"><b>확인 → 부서 전달 → 처리</b>
-            <span>당직자가 요약·분류를 확인(confirm)하면 즉시 해당 부서 담당자에게 전달되고, 모든 이력이 기록됩니다.</span></div>
+          <span class="fk">1번 — 맞음</span>
+          <div class="ft"><b>기록 확정 후 부서 전달</b>
+            <span>민원인이 1번을 누르면 분류·요약이 확정되어 담당 부서로 전달됩니다.</span></div>
         </div>
-        <div class="fork-card fail">
-          <span class="fk">기록 실패</span>
-          <div class="ft"><b>당직자가 민원인에게 재전화</b>
-            <span>음성 인식 불충분·통화 중단 등으로 기록이 실패하면, 확보된 발신번호로 당직자가 직접 전화해 내용을 확인하고, <b>보정한 내용</b>으로 부서에 전달합니다.</span>
-            <span class="loopline"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .35 1.95.66 2.87a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.21-1.21a2 2 0 012.11-.45c.92.31 1.87.53 2.87.66A2 2 0 0122 16.92z"/></svg> 재전화 → 내용 보정 → 부서 전달</span></div>
+        <div class="fork-card re">
+          <span class="fk">2번 — 틀림</span>
+          <div class="ft"><b>재안내 또는 당직자 연결</b>
+            <span>2번을 누르면 다른 분류 후보를 안내하거나 당직자에게 연결해, 자유발화 해석 없이 정확히 접수합니다.</span></div>
         </div>
       </div>
     </div>
 
     <div class="flow rv" style="animation-delay:.14s">
       <div class="scale" style="border-top:none;padding-top:0;margin-top:0">
-        <div class="scale-label">우선순위 5단계 — 통화 내용을 실시간 분석해 위험도 자동 산정</div>
+        <div class="scale-label">위험도 5단계 — 전사·분류 결과로 자동 산정 (전 단계 공통)</div>
         <div class="scale-bar">
           <div class="sb" style="background:var(--p1)">일반<small>LV.1</small></div>
           <div class="sb" style="background:var(--p2)">관심<small>LV.2</small></div>
@@ -701,8 +748,8 @@ body::before{
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-no">03</span>
-      <h2>분야별 통화 시나리오</h2>
-      <p>당직 매뉴얼에서 민원 빈도가 높은 세 분야 — 도로 파손(§35), 쓰레기(§22), 불법주정차(§43) — 의 실제 대화 흐름입니다. 안내 → 발화 → 요약 확인 → 내용 확인 → 종료의 5단계가 모든 통화에 동일하게 적용됩니다.</p>
+      <h2>분야별 접수 시나리오</h2>
+      <p>당직 매뉴얼에서 민원 빈도가 높은 세 분야 — 도로 파손(§35), 쓰레기(§22), 불법주정차(§43) — 의 접수 예시입니다. 민원 음성이 전사·분류·요약되어 담당자에게 전달되는 흐름과, 자동 분류가 부정확할 때 번호 입력으로 바로잡는 흐름을 함께 보여줍니다.</p>
     </div>
     <div class="scen-tabs" id="scenTabs"></div>
     <div class="scen-grid">
@@ -710,10 +757,10 @@ body::before{
         <div class="sc-head" id="scHead"></div>
         <div class="dlg" id="dlgBody"></div>
         <div class="branch-bar">
-          <span class="bl">AI 요약이 틀렸다면? — 두 분기를 직접 확인해 보세요</span>
+          <span class="bl">자동 분류가 부정확하면? — 민원인이 2번을 눌러 바로잡습니다</span>
           <div class="bswitch">
-            <button id="br-ok" class="on" onclick="setBranch('ok')">요약이 맞은 경우</button>
-            <button id="br-no" onclick="setBranch('no')">요약이 틀린 경우</button>
+            <button id="br-ok" class="on" onclick="setBranch('ok')">정상 접수</button>
+            <button id="br-no" onclick="setBranch('no')">분류 부정확 시</button>
           </div>
         </div>
       </div>
@@ -728,7 +775,7 @@ body::before{
     <div class="sec-head">
       <span class="sec-no">04</span>
       <h2>당직자가 받는 화면 — 앱 · 웹</h2>
-      <p>당직자는 휴대폰 앱과 웹 대시보드 어디서든 같은 민원을 확인합니다. 웹에서는 [담당부서 전달 확인] 버튼을 직접 눌러 전달 과정을, 기록 실패 건에서는 재전화 → 보정 → 전달 흐름을 체험할 수 있습니다.</p>
+      <p>당직자는 휴대폰 앱과 웹 대시보드 어디서든 같은 민원을 확인합니다. 전사·분류·요약된 민원을 받아 내용을 확인하고, 버튼 하나로 담당 부서에 전달합니다. (2단계 시범사업부터 제공)</p>
     </div>
 
     <div class="dev-toggle">
@@ -822,8 +869,7 @@ body::before{
         </div>
       </div>
       <p style="margin-top:16px;font-size:13px;color:var(--a-tx2);position:relative;z-index:1">
-        ▲ 목록에서 민원을 선택하고, <b style="color:var(--a-p2)">[담당부서 전달 확인]</b> 버튼과
-        기록 실패 건의 <b style="color:var(--a-fail)">[민원인 재전화]</b> 버튼을 직접 눌러보세요. 상태 타임라인이 실시간으로 바뀝니다.
+        ▲ 목록에서 민원을 선택하고, <b style="color:var(--a-p2)">[담당부서 전달 확인]</b> 버튼을 직접 눌러보세요. 상태 타임라인이 실시간으로 바뀝니다.
       </p>
     </div>
   </div>
@@ -850,7 +896,7 @@ body::before{
           <span class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span>
           <div><b>웹 대시보드</b><small>당직실 PC — 전체 현황·전달 확인</small></div>
         </div>
-        <p>당직실에서는 웹으로 전체 민원 흐름을 한눈에 봅니다. 전달 확인(confirm), 기록 실패 건 재전화·보정도 웹에서 처리합니다.</p>
+        <p>당직실에서는 웹으로 전체 민원 흐름을 한눈에 봅니다. 전사·분류·요약된 민원을 확인(confirm)해 담당 부서로 전달하고, 모든 처리 이력이 기록됩니다.</p>
       </div>
       <div class="chan rv" style="animation-delay:.12s">
         <div class="ch-top">
@@ -865,14 +911,14 @@ body::before{
       <div class="chan rv" style="animation-delay:.18s">
         <div class="ch-top">
           <span class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span>
-          <div><b>메일</b><small>전사 전문·근거 포함 — 부서 인계용</small></div>
+          <div><b>메일</b><small>전사·요약·근거 포함 — 부서 인계용</small></div>
         </div>
         <div class="mail-mock">
           <div class="mm-h">
             <div class="mm-sub">[경계 LV.4] 도로 파손(포트홀) — 봉천로 OO 횡단보도 앞</div>
             <div class="mm-meta">보낸사람: 당직민원시스템 &lt;dangjik@gwanak.go.kr&gt; · 받는사람: 당직사령, 도로관리과</div>
           </div>
-          <div class="mm-b">민원 요약, <b>통화 전사 전문</b>, AI 분류 근거, 매뉴얼 §35 절차가 첨부됩니다. 비급박 건은 매뉴얼에 따라 <b>도로관리과 담당자 메일 전달</b>이 표준 절차이므로, 메일 채널이 곧 인계 기록이 됩니다.</div>
+          <div class="mm-b">민원 <b>녹음 전사문</b>, 자동 분류·요약, AI 분류 근거, 매뉴얼 §35 절차가 첨부됩니다. 비급박 건은 매뉴얼에 따라 <b>도로관리과 담당자 메일 전달</b>이 표준 절차이므로, 메일 채널이 곧 인계 기록이 됩니다.</div>
         </div>
       </div>
     </div>
@@ -901,13 +947,13 @@ body::before{
           <tr><th>투입 인력</th><th>월 단가</th><th>투입 M/M</th><th style="text-align:right">금액</th></tr>
         </thead>
         <tbody>
-          <tr><td>AI·음성 엔지니어<small>ASR·LLM 파이프라인 구축</small></td><td>775만 원</td><td>1.5</td><td class="qp">1,163만 원</td></tr>
-          <tr><td>백엔드·통합 개발<small>당직 워크플로우·알림 연동</small></td><td>690만 원</td><td>1.0</td><td class="qp">690만 원</td></tr>
+          <tr><td>AI·음성 엔지니어<small>전사·분류·요약 파이프라인 구축</small></td><td>775만 원</td><td>1.5</td><td class="qp">1,163만 원</td></tr>
+          <tr><td>백엔드·통합 개발<small>녹음 접수·동시 세션·전달 연동</small></td><td>690만 원</td><td>1.0</td><td class="qp">690만 원</td></tr>
           <tr><td>PM·기획<small>매뉴얼 분석·요건 정의</small></td><td>1,110만 원</td><td>0.2</td><td class="qp">222만 원</td></tr>
-          <tr style="background:var(--paper-2)"><td><b>개발비용 합계</b><small>당직 매뉴얼 기반 시스템 개발·구축·시범 운영</small></td><td></td><td><b>2.7</b></td><td class="qp"><b>약 2,000만 원</b></td></tr>
+          <tr style="background:var(--paper-2)"><td><b>개발비용 합계</b><small>녹음 기반 접수·분류·요약·담당자 전달 시스템 구축</small></td><td></td><td><b>2.7</b></td><td class="qp"><b>약 2,000만 원</b></td></tr>
         </tbody>
       </table>
-      <div class="qfoot">연구장비(서버)는 아르토에이아이 재원으로 신규 구매·배치하여 테스트하며, 동시 처리 세션 10개 수준으로 준비합니다. 피크 처리량 확정 전 구청 선구매를 피하고, 시범 기간에 실측 후 본사업 장비 규모를 산정합니다.</div>
+      <div class="qfoot">연구장비(GPU 서버)는 아르토에이아이 재원으로 신규 구매·배치하여 테스트합니다. 경량 모델 기반이라 소비자/추론용 GPU 1장으로 동시 다수 세션을 처리할 수 있으며, 시범 기간에 실수요를 실측해 본사업 장비 규모를 산정합니다.</div>
     </div>
 
     <div class="qtbl rv" style="animation-delay:.06s">
@@ -929,7 +975,7 @@ body::before{
     <div class="qtbl rv">
       <div class="qh">
         <h3>동시 처리 세션별 장비 견적 개요</h3>
-        <small>음성인식(최대 1B급) 동시 세션 + 요약 LLM(최대 20B) 단일 모델 공용 · VAT 별도</small>
+        <small>경량 모델(음성 전사 + 분류·요약) 기준 · 소비자/추론용 GPU · VAT 별도</small>
       </div>
       <table>
         <thead>
@@ -937,32 +983,32 @@ body::before{
         </thead>
         <tbody>
           <tr>
-            <td>~ 10<small style="color:var(--brand-deep)">시범사업 구성</small></td>
-            <td>RTX 6000 Ada 48GB ×1<small>요약 LLM(최대 20B, INT4 약 12GB)과 음성인식 10세션을 단일 48GB GPU에서 공용</small><small style="color:var(--ink-3)">대안 구성: NVIDIA DGX Spark ×1 (GB10 · 통합 128GB · 약 700만 원) — 20B LLM과 음성 10세션 합산 가중치가 약 15GB로 통합 메모리에 충분히 적재. 무소음·저전력이라 서버실 없이 당직실 설치 가능. 무중단 운영이 필요하면 이중화로 ×2 구성</small></td>
-            <td>Intel Xeon Silver 16코어급 ×1</td>
-            <td>64GB ECC</td>
-            <td class="qp">약 2,000 ~ 2,500만 원</td>
-          </tr>
-          <tr>
             <td>~ 30</td>
-            <td>L40S 48GB ×2<small>1장 요약 LLM(20B) 전용 + 1장 음성인식 세션 처리</small></td>
-            <td>Intel Xeon Gold 24코어급 ×1</td>
-            <td>128GB ECC</td>
-            <td class="qp">약 4,000 ~ 5,000만 원</td>
+            <td>RTX 5080 16GB ×1<small>전사·분류·요약 경량 모델 구동</small></td>
+            <td>Intel Core i7 / Ryzen 7급</td>
+            <td>64GB</td>
+            <td class="qp">약 400 ~ 600만 원</td>
           </tr>
           <tr>
-            <td>~ 50</td>
-            <td>L40S 48GB ×3<small>1장 요약 LLM(20B) 전용 + 2장 음성인식 세션 분산</small></td>
-            <td>Intel Xeon Gold 32코어급 ×1~2</td>
-            <td>256GB ECC</td>
-            <td class="qp">약 6,000 ~ 7,500만 원</td>
+            <td>~ 50<small style="color:var(--brand-deep)">시범사업 구성</small></td>
+            <td>RTX 4090 24GB ×1<small>여유 VRAM으로 동시 세션·피크 버퍼 확보</small></td>
+            <td>Intel Core i9 / Ryzen 9급</td>
+            <td>128GB</td>
+            <td class="qp">약 600 ~ 800만 원</td>
           </tr>
           <tr>
             <td>~ 100</td>
-            <td>L40S 48GB ×5<small>1장 요약 LLM(20B) 전용 + 4장 음성인식 세션 분산 · 4U 서버</small></td>
-            <td>Intel Xeon Gold 듀얼 (총 64코어)</td>
-            <td>512GB ECC</td>
-            <td class="qp">약 1억 ~ 1.2억 원</td>
+            <td>RTX 5090 32GB ×1<small>대안: 추론용 L40S 48GB ×1</small></td>
+            <td>Intel Xeon / Ryzen 9급</td>
+            <td>128GB</td>
+            <td class="qp">약 900 ~ 1,400만 원</td>
+          </tr>
+          <tr>
+            <td>100+ / 이중화</td>
+            <td>RTX 5090 32GB ×2 또는 L40S 48GB ×2<small>무중단 운영·부하 분산</small></td>
+            <td>Intel Xeon 듀얼급</td>
+            <td>256GB</td>
+            <td class="qp">약 1,800 ~ 2,800만 원</td>
           </tr>
         </tbody>
       </table>
@@ -970,7 +1016,7 @@ body::before{
 
     <div class="bnote rv">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
-      <span>본 표는 동시 세션 수요에 따른 견적 규모를 가늠하기 위한 참고용 개요입니다. <b>시범사업을 통해 동시 처리 세션 실수요를 확인한 후, 위 제안과 유사한 수준으로 최종 장비 견적을 제안</b>드릴 예정입니다. 장비 견적가는 2026년 6월 국내 시장가 기반 개략치로, 부품 시세·환율에 따라 변동될 수 있습니다.</span>
+      <span>본 제안은 양방향 실시간 대화 대신 음성 전사·분류·요약과 번호 입력 방식을 사용하므로 대형 생성 모델이 필요하지 않습니다. 따라서 소비자/추론용 GPU 한 장으로도 동시 세션을 넉넉히 처리할 수 있어, 시범 단계부터 충분한 처리량을 확보합니다. 위 견적은 피크 부하를 고려해 여유 버퍼를 둔 개략치이며, <b>시범사업에서 실수요를 확인한 후 위 범위 내에서 최종 장비 견적을 제안</b>드릴 예정입니다. 장비 견적가는 2026년 6월 국내 시장가 기반으로, 부품 시세·환율(특히 VRAM 수급)에 따라 변동될 수 있습니다.</span>
     </div>
   </div>
 </section>
@@ -1036,7 +1082,7 @@ body::before{
 <footer class="sec" style="padding-top:48px">
   <div class="wrap">
     <div class="foot">
-      <span>관악구청 당직 민원응대 시스템</span>
+      <span>관악구청 종합상황실 · 야간/휴일 민원응대 시스템 개편 제안</span>
       <span class="mono">Artaud AI</span>
     </div>
   </div>
@@ -1186,14 +1232,14 @@ const CASES = [
     summary:'잡음·통화 중단으로 기록 실패 — 콜백 대기',
     transcript:[
       {who:'sys', label:'시스템', text:GREET},
-      {who:'caller', label:'민원인', text:'(잡음) ……물이…… 아니 그게 아니라…… (통화 중단)'},
-      {who:'flag', text:'발화 인식률 낮음 · 통화 중단 — 요약 확인 단계 진입 실패. 민원 기록 미완료. 발신번호 확보됨 → 당직자 재전화 필요.'},
+      {who:'caller', label:'민원인', text:'(잡음) ……물이…… 아니 그게 아니라…… (녹음 중단)'},
+      {who:'flag', text:'녹음 인식률 낮음 · 중도 중단 — 자동 분류 불가. 민원 기록 미완료. 발신번호 확보됨 → 당직자 재연락 필요.'},
     ],
-    keys:['인식률 낮음','통화 중단','발신번호 확보'],
-    note:'요약 확인(③)에 도달하지 못해 <b>기록이 확정되지 않은 건</b>. 시스템은 실패 건을 숨기지 않고 별도 알림으로 당직자에게 전달 — 당직자가 재전화로 내용을 확인·보정한 뒤 부서에 전달합니다.',
+    keys:['인식률 낮음','녹음 중단','발신번호 확보'],
+    note:'녹음 인식이 불충분해 <b>자동 분류에 실패한 건</b>. 시스템은 실패 건을 숨기지 않고 별도 알림으로 당직자에게 전달 — 당직자가 확보된 발신번호로 재연락해 내용을 확인한 뒤 부서에 전달합니다.',
     manualLabel:'기록 실패 건 처리 절차', manualSrc:'시스템 운영 규칙',
-    steps:['실패 건 즉시 당직자 알림 (웹·앱·문자)','확보된 발신번호로 당직자 재전화','통화로 민원 내용 확인 → 기록 보정','보정된 내용으로 담당부서 전달'],
-    actions:[{t:'민원인에게 재전화',k:'danger',i:'phone'},{t:'기록 보정 입력',k:'ghost',i:'app'}],
+    steps:['실패 건 즉시 당직자 알림 (웹·앱·문자)','확보된 발신번호로 당직자 재연락','통화로 민원 내용 확인 → 기록 보완','보완된 내용으로 담당부서 전달'],
+    actions:[{t:'민원인에게 재연락',k:'danger',i:'phone'},{t:'기록 보완 입력',k:'ghost',i:'app'}],
   },
   /* ---- 단순문의 자동응대 ---- */
   {
@@ -1202,17 +1248,17 @@ const CASES = [
     title:'무인민원발급기 이용 문의',
     addr:'-',
     callerNo:'010-40XX-18XX',
-    deliver:'AI 자동 응대 · 앱 기록', deliverIcon:'app',
+    deliver:'자동 분류·안내 · 앱 기록', deliverIcon:'app',
     summary:'발급기 운영시간·발급 서류 단순 문의',
     transcript:[
       {who:'caller', label:'민원인', text:'서울대입구역 무인발급기 지금도 쓸 수 있나요? 등본 떼려고요.'},
-      {who:'sys', label:'시스템', text:'네, 서울대입구역 7번 출구 발급기는 24시간 운영되며 주민등록등본·가족관계증명서 발급이 가능합니다. 더 도와드릴 내용이 있을까요?'},
+      {who:'sys', label:'시스템', text:'서울대입구역 7번 출구 발급기는 24시간 운영되며 주민등록등본·가족관계증명서 발급이 가능하다는 안내가 자동 제공됩니다.'},
     ],
     keys:['단순 안내','정보 문의'],
-    note:'담당자 호출이 <b>불필요한 단순 문의</b>. 시스템이 매뉴얼 정보로 직접 안내하고, 당직자에게는 기록만 남깁니다.',
+    note:'담당자 호출이 <b>불필요한 단순 문의</b>. 자동 분류 후 매뉴얼 정보로 안내하고, 당직자에게는 기록만 남깁니다.',
     manualLabel:'무인민원발급 안내 정보', manualSrc:'매뉴얼 §15',
     steps:['서울대입구역 7번 출구 — 24시간 연중무휴','신림역 3번 출구 — 05:30~23:30','봉천역 5번 출구 — 05:30~23:30','구청 민원실 — 24시간 연중무휴'],
-    actions:[{t:'AI 자동 응대 완료',k:'done',i:'check'}],
+    actions:[{t:'자동 안내 완료',k:'done',i:'check'}],
   },
 ];
 
@@ -1255,28 +1301,62 @@ function renderScenario(){
   renderDlg();
   renderSide();
 }
-function dlgRow(t){
-  if(t.loop){
-    return `<div class="dl-loop"><svg viewBox="0 0 24 24">${ICON.redo}</svg><span><b>① 자동 안내부터 재시작</b> — ${t.text}</span></div>`;
+function toClassify(text){
+  text = text.replace('말씀하신 내용을 정리하겠습니다.','전사 내용을 분석한 결과,');
+  text = text.replace('다시 정리하겠습니다.','재분석 결과,');
+  text = text.replace('건으로 접수하려고 합니다. 이번에는 내용이 맞으십니까?','건으로 분류했습니다.');
+  text = text.replace('건으로 접수하려고 합니다. 내용이 맞으십니까?','건으로 분류했습니다.');
+  text = text.replace('건으로 접수하려고 합니다.','건으로 분류했습니다.');
+  text = text.replace('이번에는 내용이 맞으십니까?','');
+  text = text.replace('내용이 맞으십니까?','');
+  return text.trim();
+}
+function recordRows(c){
+  // 당직자 화면: 민원 녹음(전사문) + 자동 분류·요약 핵심만
+  const flag = c.transcript.find(t=>t.who==='flag');
+  if(flag) return `<div class="bub flag"><svg viewBox="0 0 24 24">${ICON.alert}</svg>${flag.text}</div>`;
+  const caller = c.transcript.find(t=>t.who==='caller');
+  const summary = c.transcript.find(t=>t.who==='sys' && t.confirm) || c.transcript.filter(t=>t.who==='sys').pop();
+  let html = '';
+  if(caller) html += `<div class="bub caller"><span class="who">민원 녹음 · 전사문</span>${caller.text}</div>`;
+  if(c.autoHandled){
+    html += `<div class="bub sys"><span class="who">자동 분류</span>${c.summary} — 단순 안내 건으로 자동 분류되어 안내 후 기록만 보관합니다.</div>`;
+  } else if(summary){
+    html += `<div class="bub sys"><span class="who">자동 분류·요약</span>${toClassify(summary.text)}</div>`;
   }
+  return html;
+}
+function dlgRow(t){
   const right = t.who==='caller';
-  const wrongTag = t.wrong ? `<div class="wrongtag">✕ 민원인 확인 결과 — 적색 표시 부분 오인식 → 처음부터 재접수</div>` : '';
   return `<div class="dl-row ${right?'right':''}">
     <div class="dl-step"><span class="sn">${t.step}</span><small>${t.stepKo}</small></div>
-    <div class="dl-bub ${t.confirm?'confirmq':''} ${t.wrong?'wrongb':''}"><span class="who">${t.label}</span>${t.text}${wrongTag}</div>
+    <div class="dl-bub ${t.confirm?'confirmq':''} ${t.wrong?'wrongb':''}"><span class="who">${t.label}</span>${t.text}</div>
   </div>`;
 }
 function renderDlg(){
   const c = scenCase();
+  const caller = c.transcript[1], summary = c.transcript[2];
+  const okRows = [
+    {who:'sys', step:1, stepKo:'안내음', label:'시스템 · 안내', text:'관악구청 당직 민원 접수입니다. 삐 소리 후 민원 내용을 말씀해 주세요. 통화 내용은 녹음됩니다.'},
+    {who:'caller', step:2, stepKo:'민원 녹음', label:'민원인 · 음성', text:caller.text},
+    {who:'sys', step:3, stepKo:'전사·분류·요약', label:'시스템 · 자동 처리', confirm:true, text:toClassify(summary.text)+' <b>맞으면 1번, 다르면 2번을 눌러 주세요.</b>'},
+    {who:'caller', step:4, stepKo:'번호 확인', label:'민원인 · 입력', text:'맞음 — <b>1번</b> 입력'},
+  ];
   let rows;
   if(curBranch==='ok'){
-    rows = c.transcript.map(dlgRow).join('') +
-      `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 기록 확정 — 당직자에게 전달 (FLOW B)</div>`;
+    rows = okRows.map(dlgRow).join('') +
+      `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 기록 확정 — 담당자에게 전달</div>`;
   }else{
-    rows = c.transcript.slice(0,2).map(dlgRow).join('')
-      + dlgRow(Object.assign({}, c.transcript[2], {wrong:true, text:c.confirmWrong||c.transcript[2].text}))
-      + c.disagree.map(dlgRow).join('')
-      + `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 정정 분류로 기록 확정 — 당직자에게 전달 (FLOW B)</div>`;
+    const fixed = c.disagree.find(t=>t.confirm);
+    const corrRows = [
+      okRows[0], okRows[1],
+      {who:'sys', step:3, stepKo:'전사·분류·요약', confirm:true, wrong:true, label:'시스템 · 자동 처리', text:toClassify(c.confirmWrong||summary.text)+' <b>맞으면 1번, 다르면 2번을 눌러 주세요.</b>'},
+      {who:'caller', step:4, stepKo:'번호 입력', label:'민원인 · 입력', text:'틀림 — <b>2번</b> 입력'},
+      {who:'sys', step:5, stepKo:'재분류·안내', label:'시스템 · 재처리', text:'다른 분류 후보를 안내하거나 당직자에게 연결합니다. ' + (fixed?toClassify(fixed.text):'')},
+      {who:'caller', step:6, stepKo:'번호 확인', label:'민원인 · 입력', text:'맞음 — <b>1번</b> 입력'},
+    ];
+    rows = corrRows.map(dlgRow).join('')
+      + `<div class="dl-end"><svg viewBox="0 0 24 24">${ICON.check}</svg> 정정 분류로 기록 확정 — 담당자에게 전달</div>`;
   }
   document.getElementById('dlgBody').innerHTML = rows;
 }
@@ -1354,10 +1434,7 @@ function inboxHtml(){
 function detailHtml(c){
   const p=PR[c.pr];
   const ac = c.fail?'var(--a-fail)':p.ac;
-  const tr=c.transcript.map(t=>{
-    if(t.who==='flag') return `<div class="bub flag"><svg viewBox="0 0 24 24">${ICON.alert}</svg>${t.text}</div>`;
-    return `<div class="bub ${t.who}"><span class="who">${t.label}</span>${t.text}</div>`;
-  }).join('');
+  const tr=recordRows(c);
   const keys=c.keys.map(k=>`<span>${k}</span>`).join('');
   const steps=c.steps.map((s,i)=>`<div class="mstep"><span class="mn">${i+1}</span><span>${s}</span></div>`).join('');
   const acts=c.actions.map(a=>`<button class="act ${a.k}"><svg viewBox="0 0 24 24">${ICON[a.i]}</svg>${a.t}</button>`).join('');
@@ -1373,13 +1450,13 @@ function detailHtml(c){
       <div class="rdeliv"><div class="rl">전달 방식</div><div class="rvx"><svg viewBox="0 0 24 24">${ICON[c.deliverIcon]}</svg> ${c.deliver}</div></div>
     </div>
     <div class="block">
-      <div class="bh">통화 실시간 전사</div>
+      <div class="bh">민원 녹음 · 전사 / 자동 분류·요약</div>
       <div class="tr-row">${tr}</div>
     </div>
     <div class="block">
       <div class="bh">AI 우선순위 판별 근거</div>
       <div class="ai-card" style="border-left-color:${ac}">
-        <div class="ai-eng"><span class="pd"></span> 통화 내용 자동 분석</div>
+        <div class="ai-eng"><span class="pd"></span> 전사 내용 자동 분석</div>
         <div class="ai-keys" style="--ac:${ac}">${keys}</div>
         <div class="ai-note">${c.note}</div>
       </div>
@@ -1459,19 +1536,19 @@ function closeLock(){ document.getElementById('lock').classList.remove('show'); 
 function webTimeline(c){
   const mk=(state,title,sub)=>`<div class="tl-step ${state}"><div class="td"></div><div class="tt"><b>${title}</b><span>${sub}</span></div></div>`;
   if(c.status==='auto'){
-    return mk('done','민원 접수', c.time+' 자동 응대')+mk('done','AI 직접 안내·종료','담당자 호출 없음')+mk('done','기록 보관','검색 가능 · 익일 보고 포함');
+    return mk('done','민원 접수', c.time+' 녹음')+mk('done','자동 분류·안내','담당자 호출 없음')+mk('done','기록 보관','검색 가능 · 익일 보고 포함');
   }
   if(c.status==='fail'){
-    return mk('done','민원 접수', c.time)+mk('fail','AI 기록','요약 확인 실패 — 통화 중단')+mk('now','당직자 재전화','발신번호 '+c.callerNo)+mk('dim','내용 보정 → 부서 전달','보정 후 전달 가능');
+    return mk('done','민원 접수', c.time)+mk('fail','자동 분류','녹음 인식 실패 — 중도 중단')+mk('now','당직자 재연락','발신번호 '+c.callerNo)+mk('dim','내용 보완 → 부서 전달','보완 후 전달 가능');
   }
   if(c.status==='callback'){
-    return mk('done','민원 접수', c.time)+mk('fail','AI 기록','요약 확인 실패 — 통화 중단')+mk('done','당직자 재전화·확인','통화로 내용 보정 완료')+mk('now','부서 전달 대기','보정 내용 전달 확인 필요');
+    return mk('done','민원 접수', c.time)+mk('fail','자동 분류','녹음 인식 실패 — 중도 중단')+mk('done','당직자 재연락·확인','통화로 내용 보완 완료')+mk('now','부서 전달 대기','보완 내용 전달 확인 필요');
   }
   if(c.status==='sent'){
-    return mk('done','민원 접수', c.time)+mk('done','AI 기록 확정','민원인 확인 완료')+mk('done','당직자 확인',c.sentAt||'확인 완료')+mk('done','담당부서 전달',c.dept+' 메일·문자 발송');
+    return mk('done','민원 접수', c.time)+mk('done','전사·분류·요약','자동 처리 완료')+mk('done','당직자 확인',c.sentAt||'확인 완료')+mk('done','담당부서 전달',c.dept+' 메일·문자 발송');
   }
   /* wait */
-  return mk('done','민원 접수', c.time)+mk('done','AI 기록 확정','민원인 확인 완료')+mk('now','당직자 확인 대기','웹·앱·문자·메일 발송됨')+mk('dim','담당부서 전달','확인 시 자동 발송');
+  return mk('done','민원 접수', c.time)+mk('done','전사·분류·요약','자동 처리 완료')+mk('now','당직자 확인 대기','웹·앱·문자·메일 발송됨')+mk('dim','담당부서 전달','확인 시 자동 발송');
 }
 function webActions(c){
   if(c.status==='wait'){
@@ -1484,18 +1561,18 @@ function webActions(c){
   }
   if(c.status==='fail'){
     return `<div class="failbox"><div class="fb-t"><svg viewBox="0 0 24 24">${ICON.alert}</svg> 민원 기록 실패 — 당직자 확인 필요</div>
-      <p>요약 확인 단계에 도달하지 못했습니다. 확보된 발신번호로 직접 전화하여 내용을 확인해 주세요.</p></div>
-      <button class="wbtn warn" onclick="doCallback('${c.id}')"><svg viewBox="0 0 24 24">${ICON.phone}</svg> 민원인에게 재전화 (${c.callerNo.split(' ')[0]})</button>`;
+      <p>녹음 인식이 불충분해 자동 분류에 실패했습니다. 확보된 발신번호로 직접 전화하여 내용을 확인해 주세요.</p></div>
+      <button class="wbtn warn" onclick="doCallback('${c.id}')"><svg viewBox="0 0 24 24">${ICON.phone}</svg> 민원인에게 재연락 (${c.callerNo.split(' ')[0]})</button>`;
   }
   if(c.status==='callback'){
-    return `<div class="wnote"><b>재전화 완료</b> — 통화로 확인한 내용으로 기록이 보정되었습니다: "반지하 주택 <b>침수 우려</b>, 배수 요청 (신사동 OO길)" → 치수과 배정.</div>
-      <button class="wbtn primary" style="--ac:var(--a-fail)" onclick="confirmSend('${c.id}')"><svg viewBox="0 0 24 24">${ICON.send}</svg> 보정 내용 부서 전달 — 치수과</button>`;
+    return `<div class="wnote"><b>재연락 완료</b> — 통화로 확인한 내용으로 기록이 보완되었습니다: "반지하 주택 <b>침수 우려</b>, 배수 요청 (신사동 OO길)" → 치수과 배정.</div>
+      <button class="wbtn primary" style="--ac:var(--a-fail)" onclick="confirmSend('${c.id}')"><svg viewBox="0 0 24 24">${ICON.send}</svg> 보완 내용 부서 전달 — 치수과</button>`;
   }
-  return `<button class="wbtn done"><svg viewBox="0 0 24 24">${ICON.check}</svg> AI 자동 응대 완료 — 기록만 보관</button>`;
+  return `<button class="wbtn done"><svg viewBox="0 0 24 24">${ICON.check}</svg> 자동 분류·안내 완료 — 기록만 보관</button>`;
 }
 function confirmSend(id){
   const c=CASES.find(x=>x.id===id);
-  if(c.status==='callback'){ c.dept='치수과'; c.title='반지하 침수 우려 (재전화 보정)'; c.field='치수·배수'; }
+  if(c.status==='callback'){ c.dept='치수과'; c.title='반지하 침수 우려 (재연락 보완)'; c.field='치수·배수'; }
   c.status='sent'; c.sentAt='방금 · 당직사령 확인';
   renderWeb();
 }
@@ -1523,10 +1600,7 @@ function renderWebList(){
 function renderWebDetail(){
   const c=CASES.find(x=>x.id===curWeb); const p=PR[c.pr];
   const ac=c.fail?'var(--a-fail)':p.ac;
-  const tr=c.transcript.map(t=>{
-    if(t.who==='flag') return `<div class="bub flag"><svg viewBox="0 0 24 24">${ICON.alert}</svg>${t.text}</div>`;
-    return `<div class="bub ${t.who}"><span class="who">${t.label}</span>${t.text}</div>`;
-  }).join('');
+  const tr=recordRows(c);
   document.getElementById('webDetail').innerHTML=`
     <div class="bd-top" style="--ac:${ac}">
       <span class="pr-big" style="background:${ac}">${c.fail?({fail:'기록 실패',callback:'재전화 보정 완료',sent:'보정 후 전달'}[c.status]||p.ko):p.ko+' · '+p.lv}</span>
@@ -1537,7 +1611,7 @@ function renderWebDetail(){
     <div class="bd-cols">
       <div class="bd-col">
         <div class="bd-block">
-          <div class="bh">통화 전사 · 요약 확인 이력</div>
+          <div class="bh">전사 · 분류·요약 이력</div>
           <div class="tr-row">${tr}</div>
         </div>
         <div class="bd-block">
