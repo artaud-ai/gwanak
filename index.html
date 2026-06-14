@@ -368,6 +368,42 @@ body::before{
 .lock-btn:hover{background:rgba(255,90,82,.16)}
 .lock-btn svg{width:17px;height:17px;stroke:var(--a-p5);fill:none;stroke-width:2}
 
+/* ---------- biz & privacy ---------- */
+.princip{margin-top:26px;background:#10160f;color:#eef3ea;border:1px solid #2c3a28;border-radius:18px;padding:30px 32px;position:relative;overflow:hidden}
+.princip::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--brand)}
+.princip .src{font-family:var(--mono);font-size:11px;color:#9fc79a;letter-spacing:.03em}
+.princip h3{font-size:21px;margin:13px 0 11px;letter-spacing:-.02em;line-height:1.35}
+.princip p{color:#c2cfbd;font-size:14.5px;max-width:62ch}
+.bnote{margin-top:16px;display:flex;gap:10px;align-items:flex-start;background:var(--paper-2);border:1px solid var(--line-2);border-radius:12px;padding:14px 17px;font-size:13px;color:var(--ink-2);line-height:1.55}
+.bnote svg{width:16px;height:16px;stroke:var(--ink-3);fill:none;stroke-width:2;flex:none;margin-top:2px}
+.pogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.pocard{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:21px 22px}
+.pocard .pk{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.05em}
+.pocard h4{font-size:16px;letter-spacing:-.01em;margin:9px 0 7px}
+.pocard p{font-size:13px;color:var(--ink-2);line-height:1.55;min-height:62px}
+.pocard .kv{border-top:1px dashed var(--line-2);margin-top:13px;padding-top:11px;display:flex;flex-direction:column;gap:6px}
+.pocard .kv div{display:flex;justify-content:space-between;gap:10px;font-size:12px}
+.pocard .kv span{color:var(--ink-3)}
+.pocard .kv b{font-family:var(--mono);font-size:11.5px;text-align:right}
+.pcommon{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.pcom{display:flex;gap:11px;background:var(--paper-2);border:1px solid var(--line-2);border-radius:13px;padding:16px 17px;align-items:flex-start}
+.pcom svg{width:18px;height:18px;stroke:var(--brand-deep);fill:none;stroke-width:1.8;flex:none;margin-top:2px}
+.pcom b{display:block;font-size:13.5px;letter-spacing:-.01em;margin-bottom:3px}
+.pcom span{font-size:12px;color:var(--ink-3);line-height:1.5}
+@media(max-width:880px){.bizwrap,.pogrid,.pcommon{grid-template-columns:1fr}.pocard p{min-height:auto}}
+.qtbl{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.qtbl .qh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:18px 24px 14px;border-bottom:1px solid var(--line)}
+.qtbl .qh h3{font-size:16.5px;letter-spacing:-.01em}
+.qtbl .qh small{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.qtbl table{width:100%;border-collapse:collapse;font-size:13px}
+.qtbl th{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--ink-3);text-align:left;padding:11px 16px;background:var(--paper-2);border-bottom:1px solid var(--line)}
+.qtbl td{padding:13px 16px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top;line-height:1.5}
+.qtbl tr:last-child td{border-bottom:none}
+.qtbl td:first-child{font-family:var(--mono);font-weight:700;color:var(--ink);white-space:nowrap}
+.qtbl td.qp{font-family:var(--mono);font-weight:700;color:var(--brand-deep);white-space:nowrap;text-align:right}
+.qtbl td small{display:block;font-size:11px;color:var(--ink-3);font-weight:400;margin-top:2px}
+.qtbl .qfoot{padding:13px 18px;font-size:12px;color:var(--ink-3);line-height:1.55;border-top:1px solid var(--line);background:var(--paper-2)}
+@media(max-width:880px){.qtbl{overflow-x:auto}.qtbl table{min-width:680px}}
 /* ---------- web mockup (browser) ---------- */
 .web-stage{display:none;position:relative;z-index:1}
 .web-stage.on{display:block}
@@ -839,6 +875,160 @@ body::before{
           <div class="mm-b">민원 요약, <b>통화 전사 전문</b>, AI 분류 근거, 매뉴얼 §35 절차가 첨부됩니다. 비급박 건은 매뉴얼에 따라 <b>도로관리과 담당자 메일 전달</b>이 표준 절차이므로, 메일 채널이 곧 인계 기록이 됩니다.</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 BUILD & COST -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <h2>구축 방식 · 비용</h2>
+      <p>본 시스템은 구청 내부에 자체 구축하는 방식을 기준으로 제안합니다. 비용은 시범사업과 본사업의 2단계로 구성됩니다.</p>
+    </div>
+
+    <div class="princip rv">
+      <span class="src">구축 원칙 — 자체 구축 (On-premise)</span>
+      <h3>민원인의 음성은 청사 밖으로 나가지 않습니다.</h3>
+      <p>민원 통화에는 신원·위치·생활 정보가 그대로 담깁니다. 이 음성이 외부 사업자의 인프라에 노출되지 않는 것을 최우선으로 고려하여, 클라우드 방식이 아닌 구청 내부망 서버에서 음성인식·분류·기록의 전 과정을 처리하는 자체 구축 방식으로 제안합니다. 외부 인터넷 연결 없이도 동작하는 온디바이스 AI 파이프라인이 당사의 핵심 기술입니다.</p>
+    </div>
+
+    <div class="qtbl rv">
+      <div class="qh"><h3>1단계 — 시범사업 (2026년 내 3개월)</h3><small>VAT 별도</small></div>
+      <table>
+        <thead>
+          <tr><th>투입 인력</th><th>월 단가</th><th>투입 M/M</th><th style="text-align:right">금액</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AI·음성 엔지니어<small>ASR·LLM 파이프라인 구축</small></td><td>775만 원</td><td>1.5</td><td class="qp">1,163만 원</td></tr>
+          <tr><td>백엔드·통합 개발<small>당직 워크플로우·알림 연동</small></td><td>690만 원</td><td>1.0</td><td class="qp">690만 원</td></tr>
+          <tr><td>PM·기획<small>매뉴얼 분석·요건 정의</small></td><td>1,110만 원</td><td>0.2</td><td class="qp">222만 원</td></tr>
+          <tr style="background:var(--paper-2)"><td><b>개발비용 합계</b><small>당직 매뉴얼 기반 시스템 개발·구축·시범 운영</small></td><td></td><td><b>2.7</b></td><td class="qp"><b>약 2,000만 원</b></td></tr>
+        </tbody>
+      </table>
+      <div class="qfoot">연구장비(서버)는 아르토에이아이 재원으로 신규 구매·배치하여 테스트하며, 동시 처리 세션 10개 수준으로 준비합니다. 피크 처리량 확정 전 구청 선구매를 피하고, 시범 기간에 실측 후 본사업 장비 규모를 산정합니다.</div>
+    </div>
+
+    <div class="qtbl rv" style="animation-delay:.06s">
+      <div class="qh"><h3>2단계 — 본사업 (2027년~)</h3><small>VAT 별도</small></div>
+      <table>
+        <thead>
+          <tr><th>항목</th><th>월 단가</th><th>연 M/M</th><th style="text-align:right">금액</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SW 라이선스료<small>시스템 사용권 · 매뉴얼 업데이트 반영(3영업일 이내)</small></td><td>—</td><td>—</td><td class="qp">약 5,500만 원</td></tr>
+          <tr><td>AI·음성 유지보수<small>모델 점검·정확도 관리</small></td><td>775만 원</td><td>3.6</td><td class="qp">2,790만 원</td></tr>
+          <tr><td>백엔드·운영<small>장애 대응·정기 점검</small></td><td>690만 원</td><td>2.4</td><td class="qp">1,656만 원</td></tr>
+          <tr style="background:var(--paper-2)"><td><b>연간 사용료 합계</b></td><td></td><td><b>6.0</b></td><td class="qp"><b>약 1억 원</b></td></tr>
+        </tbody>
+      </table>
+      <div class="qfoot">장비 구매비는 별도이며, 장비 규모는 시범사업 실측 처리량을 기반으로 아래 견적 개요 범위 내에서 산정합니다.</div>
+    </div>
+
+    <div class="qtbl rv">
+      <div class="qh">
+        <h3>동시 처리 세션별 장비 견적 개요</h3>
+        <small>음성인식(최대 1B급) 동시 세션 + 요약 LLM(최대 20B) 단일 모델 공용 · VAT 별도</small>
+      </div>
+      <table>
+        <thead>
+          <tr><th>동시 세션</th><th>GPU</th><th>CPU</th><th>RAM</th><th style="text-align:right">견적가</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>~ 10<small style="color:var(--brand-deep)">시범사업 구성</small></td>
+            <td>RTX 6000 Ada 48GB ×1<small>요약 LLM(최대 20B, INT4 약 12GB)과 음성인식 10세션을 단일 48GB GPU에서 공용</small><small style="color:var(--ink-3)">대안 구성: NVIDIA DGX Spark ×1 (GB10 · 통합 128GB · 약 700만 원) — 20B LLM과 음성 10세션 합산 가중치가 약 15GB로 통합 메모리에 충분히 적재. 무소음·저전력이라 서버실 없이 당직실 설치 가능. 무중단 운영이 필요하면 이중화로 ×2 구성</small></td>
+            <td>Intel Xeon Silver 16코어급 ×1</td>
+            <td>64GB ECC</td>
+            <td class="qp">약 2,000 ~ 2,500만 원</td>
+          </tr>
+          <tr>
+            <td>~ 30</td>
+            <td>L40S 48GB ×2<small>1장 요약 LLM(20B) 전용 + 1장 음성인식 세션 처리</small></td>
+            <td>Intel Xeon Gold 24코어급 ×1</td>
+            <td>128GB ECC</td>
+            <td class="qp">약 4,000 ~ 5,000만 원</td>
+          </tr>
+          <tr>
+            <td>~ 50</td>
+            <td>L40S 48GB ×3<small>1장 요약 LLM(20B) 전용 + 2장 음성인식 세션 분산</small></td>
+            <td>Intel Xeon Gold 32코어급 ×1~2</td>
+            <td>256GB ECC</td>
+            <td class="qp">약 6,000 ~ 7,500만 원</td>
+          </tr>
+          <tr>
+            <td>~ 100</td>
+            <td>L40S 48GB ×5<small>1장 요약 LLM(20B) 전용 + 4장 음성인식 세션 분산 · 4U 서버</small></td>
+            <td>Intel Xeon Gold 듀얼 (총 64코어)</td>
+            <td>512GB ECC</td>
+            <td class="qp">약 1억 ~ 1.2억 원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bnote rv">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span>본 표는 동시 세션 수요에 따른 견적 규모를 가늠하기 위한 참고용 개요입니다. <b>시범사업을 통해 동시 처리 세션 실수요를 확인한 후, 위 제안과 유사한 수준으로 최종 장비 견적을 제안</b>드릴 예정입니다. 장비 견적가는 2026년 6월 국내 시장가 기반 개략치로, 부품 시세·환율에 따라 변동될 수 있습니다.</span>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PRIVACY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <h2>개인정보 처리</h2>
+      <p>자체 구축 방식이므로 수집되는 모든 데이터는 구청 내부 서버에만 저장되고 외부로 전송되지 않습니다. 음성 데이터의 보관 수준은 세 가지 안 중에서 구청이 선택할 수 있습니다.</p>
+    </div>
+
+    <div class="pcommon">
+      <div class="pcom rv"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg>
+        <div><b>녹음 사전 고지</b><span>통화 시작 시 자동 안내 단계에서 통화 내용이 녹음됨을 고지</span></div></div>
+      <div class="pcom rv" style="animation-delay:.06s"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <div><b>내부망 보관</b><span>음성·기록 일체를 구청 내부 서버에 암호화 저장, 외부 전송 없음</span></div></div>
+      <div class="pcom rv" style="animation-delay:.12s"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg>
+        <div><b>수집 최소화</b><span>음성 · 전사 텍스트 · 발신 전화번호(재전화 및 처리 결과 안내 용도)만 수집</span></div></div>
+    </div>
+
+    <div class="pogrid">
+      <div class="pocard rv">
+        <span class="pk">제 1 안</span>
+        <h4>인식 후 즉시 폐기</h4>
+        <p>음성은 인식 직후 폐기하고 전사 텍스트 기록만 보관합니다. 개인정보 보유를 최소화하는 안입니다.</p>
+        <div class="kv">
+          <div><span>음성 보관주기</span><b>0일 — 즉시 폐기</b></div>
+          <div><span>텍스트 기록</span><b>6개월 후 파기</b></div>
+          <div><span>음성 재생</span><b>불가</b></div>
+        </div>
+      </div>
+      <div class="pocard rv" style="animation-delay:.06s">
+        <span class="pk">제 2 안</span>
+        <h4>보관 전용</h4>
+        <p>음성을 서버에 암호화 보관하되 재생 기능은 제공하지 않습니다. 분쟁·감사 등 필요 시에만 절차를 거쳐 확인합니다.</p>
+        <div class="kv">
+          <div><span>음성 보관주기</span><b>6개월</b></div>
+          <div><span>보관 방법</span><b>암호화 · 접근 차단</b></div>
+          <div><span>음성 재생</span><b>평시 불가</b></div>
+        </div>
+      </div>
+      <div class="pocard rv" style="animation-delay:.12s">
+        <span class="pk">제 3 안</span>
+        <h4>당직자 재생 허용</h4>
+        <p>민원 처리 중에는 권한 있는 당직자가 음성을 재생해 전사 오류 검증과 맥락 확인에 활용하고, <b>처리 완료 후에는 재생이 차단</b>됩니다.</p>
+        <div class="kv">
+          <div><span>음성 보관주기</span><b>6개월</b></div>
+          <div><span>보관 방법</span><b>암호화 · 권한 통제</b></div>
+          <div><span>음성 재생</span><b>민원 처리 중 권한자 한정<br>민원 처리 완료 후 불가</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bnote rv">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span>모든 데이터는 민원 처리 완료 후 <b>6개월 경과 시 자동 파기</b>되며, 보관된 음성은 민원 처리가 완료되면 재생이 차단됩니다. 발신 전화번호는 기록 실패 시 재전화와 처리 결과 문자 안내에만 사용하고 동일 주기로 파기합니다. 세부 보관 방법은 구청 내부 개인정보 관리 규정에 맞춰 적용합니다.</span>
     </div>
   </div>
 </section>
